@@ -1,0 +1,219 @@
+################################################
+##          __              .___     .__      ##
+##    _____/  |______     __| _/____ |  |     ##
+##  _/ ___\   __\__  \   / __ |/ __ \|  |     ##
+##  \  \___|  |  / __ \_/ /_/ \  ___/|  |__   ##
+##   \___  >__| (____  /\____ |\___  >____/   ##
+##       \/          \/      \/    \/         ##
+##  ---------------------- Prajwal Dev ----   ##
+##                                            ##
+################################################
+
+# include .server_settings if it exists
+if [ -f $HOME/.server_settings ]; then
+    . $HOME/.server_settings
+fi
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+blue=$(tput setaf 4)
+normal=$(tput sgr0)
+
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+ else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.cbr|*.rar) unrar x -ad ./"$n" ;;
+            *.gz)        gunzip ./"$n"      ;;
+            *.cbz|*.epub|*.zip) unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *.cpio)      cpio -id < ./"$n"  ;;
+            *.cba|*.ace) unace x ./"$n"      ;;
+            *.zpaq)      zpaq x ./"$n"      ;;
+            *.arc)       arc e ./"$n"       ;;
+            *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
+                              extract $n.iso && \rm -f $n ;;
+            *)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
+}
+
+# Directory settings
+alias ..='cd ..'
+alias lss='ls -ltrah'
+
+dotSlash=""
+for i in 1 2 3 4
+do
+    dotSlash=${dotSlash}'../';
+    baseName=".${i}"
+    alias $baseName="cd ${dotSlash}"
+done
+
+function fn (){
+   local keyword=$1
+   shift
+   local args="$*"
+   if [[ $args ]]
+   then
+       args="$(sed 's/ / |grep -i /g' <<<$args)"
+       local CMD="/usr/bin/find -iname $keyword |grep -i $args"
+       eval $CMD
+       return 0;
+   fi
+   local CMD="/usr/bin/find -iname $keyword"
+   eval $CMD
+}
+
+#Python
+alias pym='python manage.py'
+
+
+########################################| GIT SETTINGS START |########################################
+
+alias gl='git log'
+alias grl='git reflog'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git pull'
+alias go='git checkout'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gg='git grep'
+alias gb='git branch'
+alias gsl='git stash list'
+
+#QuickSave Imlementation
+alias quicksee='git stash show $(git stash list | grep "__QuickSave__" | cut -d: -f1)'
+
+function quicksave(){
+    quickstash=$(git stash list | grep "__QuickSave__" | cut -d: -f1)
+    if [[ $quickstash =~ ^stash ]];then
+        git stash drop $quickstash
+    fi
+    git stash save -u __QuickSave__
+    git stash apply $(git stash list | grep "__QuickSave__" | cut -d: -f1)
+    printf "\n${green}QuickSaved current changes to stash..${normal}\n"
+}
+
+function quickapply(){
+    files=$(''git status | awk 'BEGIN{ORS=" "} /modified:/ {print $2}' '')
+    if ! [ -z "$files" ]
+    then
+        read -p "Keep current changes?(yes/*): " confirm 
+        if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
+            git stash save -u
+        else
+            git checkout .
+        fi
+    fi
+
+    quickstash=$(git stash list | grep "__QuickSave__" | cut -d: -f1)
+    if [[ $quickstash =~ ^stash ]];then
+        git stash apply $quickstash
+        printf "\n${blue}Applied QuickSave data from stash..${normal}\n"
+    else
+        printf "\n${red}No QuickSave available in the stash..${normal}\n"
+    fi
+}
+
+#Backup Files for git
+function bas(){
+    if [ $1 ]
+    then
+        for file in $*
+        do
+            if [ -f $file ]; then
+                cp -f $file $file.bak
+                go $file
+            else
+                echo "$file doesn't exist."
+            fi
+        done
+    else
+        #Srcipt to backup unstaged files from git repo.
+        echo "Saving all unstaged files to changes.zip"
+        files=$(''git status | awk 'BEGIN{ORS=" "} /modified:/ {print $2}' '')
+        if [ -f changes.zip ]
+        then
+            echo "changes.zip already exists.."
+        else
+            zip changes.zip $files
+            if [ -f changes.zip ]
+            then
+                echo "Reseting all files to HEAD..."
+                git checkout . 
+                git status
+            else
+                echo "Error creating the zip archieve."
+            fi
+        fi
+    fi
+}
+
+function bar(){
+    if [ $1 ]
+    then
+        for file in $*
+        do
+            if [ -f $file.bak ]; then
+                mv -f $file.bak $file
+            else
+                echo "No backup for $file."
+            fi
+        done
+    else
+        if [ -f changes.zip ]
+        then
+            unzip ./changes.zip
+            read -p "Delete changes.zip?(yes/*): " confirm 
+            if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]
+            then
+                rm changes.zip
+            else
+                echo "${green}changes.zip is preserved...${normal}"
+            fi
+        fi
+        
+    fi
+}
+
+########################################| GIT SETTINGS END |########################################
+
+
+
+#incognito command
+alias pvt='history -d $((HISTCMD-1)) && '
+
+#hides the command that are written in terminal
+function _0_(){
+    pvt stty -echo
+}
+
+#unhides the command that are written in terminal
+function _1_(){
+    pvt stty echo
+}

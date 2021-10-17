@@ -1,0 +1,14 @@
+$include  /etc/inputrc
+
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+
+",1":"pvt vi $(!! | awk '{print $1;exit}') OA"
+",2":"pvt vi $(!! | awk 'NR==2{print $1}') OA"
+",3":"pvt vi $(!! | awk 'NR==3{print $1}') OA"
+",4":"pvt vi $(!! | awk 'NR==4{print $1}') OA"
+",5":"pvt vi $(!! | awk 'NR==5{print $1}') OA"
+",l":"pvt vi $(!! | awk 'END{print $1}') OA"
+
+
+#",tidjango":"byobutirepotienvOQtirepotienvgs"
