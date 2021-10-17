@@ -20,10 +20,10 @@ if !empty(glob("~/.vim/plugged/fzf.vim"))
     call plug#end()
 
     "Map Ctrl + / to fzf search for all files in current directory.
-    nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    nnoremap  :Files<cr>
 
     "Map Ctrl + \ to fzf search for git files in current directory.
-    nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    nnoremap  :GFiles?<cr>
 endif
 
 set nocompatible
