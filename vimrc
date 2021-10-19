@@ -20,10 +20,12 @@ if !empty(glob("~/.vim/plugged/fzf.vim"))
     call plug#end()
 
     "Map Ctrl + / to fzf search for all files in current directory.
-    nnoremap  :Files<cr>
+    "nnoremap  :Files
+    nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 
     "Map Ctrl + \ to fzf search for git files in current directory.
-    nnoremap  :GFiles?<cr>
+    "nnoremap  :GFiles?
+    nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 endif
 
 set nocompatible
@@ -55,7 +57,7 @@ endfunction
 nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
 " set nowritebackup
 
-"set relativenumber
+set relativenumber
 set number
 " iskeyword to set a character as a part of key
 "set iskeyword+=\:
@@ -66,7 +68,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set encoding=utf-8
-set scrolloff=3
+set scrolloff=8
 set autoindent
 set showcmd
 set wildmenu
@@ -90,6 +92,7 @@ inoremap II <Esc>I
 inoremap AA <Esc>A
 "inoremap OO <Esc>O
 "inoremap oo <Esc>o
+inoremap OM <Esc>O
 
 nnoremap OO O<Esc>
 nnoremap oo o<Esc>
@@ -116,8 +119,10 @@ nnoremap <C-s>      :w<CR>:echo "File Saved.."<CR>
 "Windows operations here
 nnoremap <leader>a  :wincmd h<CR>
 nnoremap <leader>d  :wincmd l<CR>
-nnoremap <silent> <leader>+ :vertical resize +5<CR>
-nnoremap <silent> <leader>- :vertical resize -5<CR>
+nnoremap <leader>w  :wincmd k<CR>
+nnoremap <leader>s  :wincmd j<CR>
+nnoremap <silent> <leader>+ :vertical resize +10<CR>
+nnoremap <silent> <leader>- :vertical resize -10<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 nnoremap <leader>ps :Rg<SPACE>
 
