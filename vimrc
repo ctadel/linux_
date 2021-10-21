@@ -20,12 +20,12 @@ if !empty(glob("~/.vim/plugged/fzf.vim"))
     call plug#end()
 
     "Map Ctrl + / to fzf search for all files in current directory.
-    "nnoremap  :Files
-    nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    nnoremap  :Files<cr>
+    "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 
     "Map Ctrl + \ to fzf search for git files in current directory.
-    "nnoremap  :GFiles?
-    nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    nnoremap  :GFiles?<cr>
+    "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 endif
 
 set nocompatible
@@ -36,25 +36,6 @@ set nobackup
 set noswapfile
 set undodir=~/.vim/undodir
 set undofile
-function! Nun()
-    let cb = @%
-    let line_no = line(".")
-    if cb == ''
-        let cmd = "rm ~/.vim/undodir/*"
-        let op = system(cmd)
-    else
-        vsp new                            "creating new temporary buffer 
-        wincmd l                           "switching to new buffer
-        wq                                 "closing main buffer
-        let cmd = "rm ~/.vim/undodir/*"
-        let op = system(cmd)                "performing CLEAN operation
-        execute "vsp".cb
-        wincmd l                           "opened and now switching to main buffer
-        q!                                 "closing the temporary 'new' buffer
-        silent execute ":".line_no
-    endif
-endfunction
-nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
 " set nowritebackup
 
 set relativenumber
@@ -84,8 +65,31 @@ set hlsearch
 set nowrap
 set nocursorline
 
+
+function! Nun()
+    let cb = @%
+    let line_no = line(".")
+    if cb == ''
+        let cmd = "rm ~/.vim/undodir/*"
+        let op = system(cmd)
+    else
+        vsp new                            "creating new temporary buffer 
+        wincmd l                           "switching to new buffer
+        wq                                 "closing main buffer
+        let cmd = "rm ~/.vim/undodir/*"
+        let op = system(cmd)                "performing CLEAN operation
+        execute "vsp".cb
+        wincmd l                           "opened and now switching to main buffer
+        q!                                 "closing the temporary 'new' buffer
+        silent execute ":".line_no
+    endif
+endfunction
+nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
+
+
 inoremap jk <Esc>   
 inoremap kj <Esc>   
+
 
 " GIT EDITS
 function! GitWindow()
