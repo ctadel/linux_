@@ -87,6 +87,17 @@ set nocursorline
 inoremap jk <Esc>   
 inoremap kj <Esc>   
 
+" GIT EDITS
+function! GitWindow()
+    "tabnew
+    let cwd = getcwd()
+    let cmd = "bash ~/.vim/scripts/gs_symln.sh " . cwd
+    let op = system(cmd)
+    e ~/tmp/git_files
+endfunction
+nnoremap <leader>/ :call GitWindow()<cr> 
+
+
 "Quick movements
 inoremap II <Esc>I
 inoremap AA <Esc>A
@@ -110,7 +121,7 @@ inoremap <C-a>      <Esc>:tabprevious<CR>i
 inoremap <C-d>      <Esc>:tabnext<CR>i
 inoremap <C-t>      <Esc>:tabnew<CR>
 
-nnoremap <C-w>      :q<CR>
+nnoremap <C-w>      :bdelete<CR>
 "inoremap <C-w>      <Esc>:q<CR>
 
 nnoremap <C-s>      :w<CR>:echo "File Saved.."<CR>
@@ -129,7 +140,7 @@ nnoremap <leader>ps :Rg<SPACE>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>:echo $MYVIMRC "sourced.."<CR>
 
-nnoremap <leader>/ :noh<cr>
+" nnoremap <leader>/ :noh<cr>
 " nnoremap <tab> %
 " vnoremap <tab> %
 
