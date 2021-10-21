@@ -218,17 +218,4 @@ function _1_(){
     pvt stty echo
 }
 
-function gs_symln(){
-    git_dir='/home/prajwal/gitlib/intl-tel-input'
-    cd $git_dir
-    files=$(''git status | awk 'BEGIN{ORS=" "} /modified:/ {print $2}' '')
-    rm -rf ~/tmp/git_files && mkdir ~/tmp/git_files && cd ~/tmp/git_files
-    for file in $files
-    do
-        p="$git_dir/$file"
-        #path=$( echo ${p%/*} )
-        file=$( echo ${p##*/} )
-        echo "$p" "$file" 
-        echo "$p" "$file" | xargs ln -s
-    done
-}
+alias lin_="cd ~/gitlib/linux_"
