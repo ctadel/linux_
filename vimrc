@@ -87,10 +87,6 @@ endfunction
 nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
 
 
-inoremap jk <Esc>   
-inoremap kj <Esc>   
-
-
 " GIT EDITS
 function! GitWindow()
     "tabnew
@@ -101,6 +97,9 @@ function! GitWindow()
 endfunction
 nnoremap <leader>/ :call GitWindow()<cr> 
 
+" Quick Escape
+inoremap jk <Esc>cal cursor(line('.'),virtcol('.'))<cr>
+inoremap kj <Esc>cal cursor(line('.'),virtcol('.'))<cr>
 
 "Quick movements
 inoremap II <Esc>I
