@@ -84,7 +84,9 @@ function! Nun()
         silent execute ":".line_no
     endif
 endfunction
-nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
+"
+"nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
+:command Del :call Nun()
 
 
 " GIT EDITS
@@ -124,7 +126,16 @@ inoremap <C-a>      <Esc>:tabprevious<CR>i
 inoremap <C-d>      <Esc>:tabnext<CR>i
 inoremap <C-t>      <Esc>:tabnew<CR>
 
-nnoremap <C-w>      :bdelete<CR>:echo "Buffer closed.."<cr>
+function! CloseBuffer()
+    let cb = @%
+    if cb != ''
+        :bdelete
+    else
+        :q
+    endif
+endfunction
+
+nnoremap <C-w>      :call CloseBuffer()<CR>:echo "Buffer closed.."<cr>
 "inoremap <C-w>      <Esc>:q<CR>
 
 nnoremap <C-s>      :w<CR>:echo "File Saved.."<CR>
