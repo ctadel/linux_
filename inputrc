@@ -13,5 +13,9 @@ $include  /etc/inputrc
 ",1":"pvt vi $(git status -s | awk '{print $2;exit}') OA"
 ",2":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==2 {print}') OA"
 ",3":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==3 {print}') OA"
-",4":"pvt vi $(git status -s | awk 'END{print $2}') OA"
+",4":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==4 {print}') OA"
+",5":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==5 {print}') OA"
+",l":"pvt vi $(git status -s | awk 'END{print $2}') OA"
+
+
 #",tidjango":"byobutirepotienvOQtirepotienvgs"

@@ -1,4 +1,4 @@
-#! bin/bash
+#! /bin/bash
 read -p "Syncronize linux_ files to local server?(yes/*): " confirm
 if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
     cp vimrc ~/.vimrc
