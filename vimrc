@@ -137,8 +137,8 @@ nnoremap <leader>w  :wincmd k<CR>
 nnoremap <leader>s  :wincmd j<CR>
 nnoremap <silent> <leader>+ :vertical resize +10<CR>
 nnoremap <silent> <leader>- :vertical resize -10<CR>
-nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
-nnoremap <leader>ps :Rg<SPACE>
+nnoremap <leader>ps :Lex<cr> :vertical resize 30<CR>
+nnoremap <leader>pg :Rg<SPACE>
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>:echo $MYVIMRC "sourced.."<CR>
