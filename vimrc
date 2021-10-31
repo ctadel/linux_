@@ -13,6 +13,9 @@ filetype plugin on
 
 let mapleader = ","
 
+set nocompatible
+set path+=$PWD/**
+
 if !empty(glob("~/.vim/plugged/fzf.vim"))
     call plug#begin()
     Plug 'junegunn/fzf'
@@ -27,9 +30,6 @@ if !empty(glob("~/.vim/plugged/fzf.vim"))
     nnoremap  :GFiles?<cr>
     "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 endif
-
-set nocompatible
-set path+=$PWD/**
 
 "Custom undo file.
 set nobackup
