@@ -86,7 +86,7 @@ function! Nun()
 endfunction
 "
 "nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
-:command Del :call Nun()
+:command! Clear :call Nun()
 
 
 " GIT EDITS
