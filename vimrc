@@ -62,7 +62,7 @@ set smartcase
 set gdefault
 set incsearch
 set hlsearch
-set nowrap
+set wrap
 set nocursorline
 
 
