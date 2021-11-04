@@ -218,5 +218,5 @@ function _1_(){
     pvt stty echo
 }
 
-alias pubip='curl -ifconfig.co'
+alias pubip='curl ifconfig.co'
 alias lin_="cd ~/gitlib/linux_"
