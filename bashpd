@@ -204,6 +204,8 @@ function bar(){
 ########################################| GIT SETTINGS END |########################################
 
 
+alias pubip='curl ifconfig.co'
+alias lin_="cd ~/gitlib/linux_"
 
 #incognito command
 alias pvt='history -d $((HISTCMD-1)) && '
@@ -218,5 +220,12 @@ function _1_(){
     pvt stty echo
 }
 
-alias pubip='curl ifconfig.co'
-alias lin_="cd ~/gitlib/linux_"
+function pingx(){
+    if [ -z $1 ];then 
+        echo "Pinging google.com"
+        ping google.com | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
+    else
+        echo "Pinging $1"
+        ping google.com | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
+    fi
+}
