@@ -205,7 +205,11 @@ function bar(){
 
 
 alias pubip='curl ifconfig.co'
-alias lin_="cd ~/gitlib/linux_"
+
+if [ -d ~/gitlib/linux_ ]; then 
+    alias lin_="cd ~/gitlib/linux_"
+    export LIN_="/home/$USER/gitlib/linux_"
+fi
 
 #incognito command
 alias pvt='history -d $((HISTCMD-1)) && '
