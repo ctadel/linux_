@@ -186,3 +186,4 @@ cnoremap jk <C-u><esc><C-g>
 "hi CursorLine term=none cterm=none ctermbg=195
 
 nnoremap <leader>gf :wincmd gf<cr>
+nmap <leader>pp :set paste!<cr> 
