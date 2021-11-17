@@ -230,6 +230,6 @@ function pingx(){
         ping google.com | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
     else
         echo "Pinging $1"
-        ping google.com | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
+        ping $1 | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
     fi
 }
