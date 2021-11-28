@@ -16,6 +16,24 @@ let mapleader = ","
 set nocompatible
 set path+=$PWD/**
 
+if has('nvim')
+    call plug#begin('~/.vim/plugged')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'drewtempelmeyer/palenight.vim'
+    call plug#end()
+
+    "palenight configurations
+    set background=dark
+    colorscheme palenight
+    let g:lightline = { 'colorscheme': 'palenight' }
+    let g:airline_theme = "palenight"
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    let g:palenight_terminal_italics=1
+    let g:palenight_color_overrides = {
+    \    'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" },
+    \}
+endif
+
 " Polygot Plugin -> Mostly for syntax highlighting and few more features.
 if !has('nvim')
     call plug#begin()
