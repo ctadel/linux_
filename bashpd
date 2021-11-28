@@ -89,6 +89,7 @@ function fn (){
 
 #Python
 alias pym='python manage.py'
+alias pymr='python manage.py runserver 0.0.0.0:8000'
 
 
 ########################################| GIT SETTINGS START |########################################

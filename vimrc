@@ -187,3 +187,12 @@ cnoremap jk <C-u><esc><C-g>
 
 nnoremap <leader>gf :wincmd gf<cr>
 nmap <leader>pp :set paste!<cr> 
+
+
+" Relative or absolute number lines
+function! NumberToggle()
+        set nu!
+        set rnu!
+endfunction
+
+nnoremap <leader>nn :set nu! <bar> :set rnu!<CR>
