@@ -17,7 +17,7 @@ set nocompatible
 set path+=$PWD/**
 
 " Polygot Plugin -> Mostly for syntax highlighting and few more features.
-if has('nvim')
+if !has('nvim')
     call plug#begin()
     Plug 'sheerun/vim-polyglot'
     call plug#end()
