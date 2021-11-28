@@ -16,19 +16,26 @@ let mapleader = ","
 set nocompatible
 set path+=$PWD/**
 
-if !empty(glob("~/.vim/plugged/fzf.vim"))
+" Polygot Plugin -> Mostly for syntax highlighting and few more features.
+if has('nvim')
     call plug#begin()
-    Plug 'junegunn/fzf'
-    Plug 'junegunn/fzf.vim'
+    Plug 'sheerun/vim-polyglot'
     call plug#end()
 
-    "Map Ctrl + / to fzf search for all files in current directory.
-    nnoremap  :Files<cr>
-    "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    if !empty(glob("~/.vim/plugged/fzf.vim"))
+        call plug#begin()
+        Plug 'junegunn/fzf'
+        Plug 'junegunn/fzf.vim'
+        call plug#end()
 
-    "Map Ctrl + \ to fzf search for git files in current directory.
-    nnoremap  :GFiles?<cr>
-    "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+        "Map Ctrl + / to fzf search for all files in current directory.
+        nnoremap  :Files<cr>
+        "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+
+        "Map Ctrl + \ to fzf search for git files in current directory.
+        nnoremap  :GFiles?<cr>
+        "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    endif
 endif
 
 "Custom undo file.
@@ -101,7 +108,7 @@ nnoremap <leader>/ :call GitWindow()<cr>
 
 " Quick Escape
 inoremap jk <Esc>cal cursor(line('.'),virtcol('.'))<cr>
-inoremap kj <Esc>cal cursor(line('.'),virtcol('.'))<cr>
+"inoremap kj <Esc>cal cursor(line('.'),virtcol('.'))<cr>
 
 "Quick movements
 inoremap II <Esc>I
@@ -111,7 +118,7 @@ inoremap AA <Esc>A
 inoremap OM <Esc>O
 
 nnoremap OO O<Esc>
-nnoremap oo o<Esc>
+"nnoremap oo o<Esc>
 
 nnoremap j gj
 nnoremap k gk
