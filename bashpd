@@ -215,16 +215,6 @@ fi
 #incognito command
 alias pvt='history -d $((HISTCMD-1)) && '
 
-#hides the command that are written in terminal
-function _0_(){
-    pvt stty -echo
-}
-
-#unhides the command that are written in terminal
-function _1_(){
-    pvt stty echo
-}
-
 function pingx(){
     if [ -z $1 ];then 
         echo "Pinging google.com"
@@ -234,3 +224,7 @@ function pingx(){
         ping $1 | awk 'BEGIN{ORS="\t"}{print substr($8,6,10)}'
     fi
 }
+
+if [ -f  /usr/bin/nvim ]; then
+  alias vi='nvim'
+fi
