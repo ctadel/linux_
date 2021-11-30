@@ -13,12 +13,9 @@ filetype plugin on
 
 let mapleader = ","
 
+set hidden
 set nocompatible
 set path+=$PWD/**
-
-if has('nvim')
-    set mouse=a
-endif
 
 "Custom undo file.
 set nobackup
@@ -56,12 +53,15 @@ set nocursorline
 set updatetime=300
 set timeoutlen=500
 set clipboard=unnamedplus
+:set list lcs=tab:\|\ 
 
 
 if has('nvim') 
+    call plug#begin('~/.vim/plugged')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'drewtempelmeyer/palenight.vim'
         Plug 'vim-airline/vim-airline'
+        Plug 'akinsho/toggleterm.nvim'
     call plug#end()
 
     "coc configurations 
@@ -86,23 +86,24 @@ if has('nvim')
     let g:palenight_color_overrides = {
     \    'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" },
     \}
+
+    set mouse=a
+    nnoremap <silent><c-_> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 endif
 
-if !has('nvim')
-    if !empty(glob("~/.vim/plugged/fzf.vim"))
-        call plug#begin()
-        Plug 'junegunn/fzf'
-        Plug 'junegunn/fzf.vim'
-        call plug#end()
+if !empty(glob("~/.vim/plugged/fzf.vim"))
+    call plug#begin()
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
+    call plug#end()
 
-        "Map Ctrl + / to fzf search for all files in current directory.
-        nnoremap  :Files<cr>
-        "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    "Map Ctrl + / to fzf search for all files in current directory.
+    nnoremap  :Files<cr>
+    "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 
-        "Map Ctrl + \ to fzf search for git files in current directory.
-        nnoremap  :GFiles?<cr>
-        "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
-    endif
+    "Map Ctrl + \ to fzf search for git files in current directory.
+    nnoremap  :GFiles?<cr>
+    "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
 endif
 
 function! Nun()
