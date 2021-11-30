@@ -17,55 +17,7 @@ set nocompatible
 set path+=$PWD/**
 
 if has('nvim')
-    call plug#begin('~/.vim/plugged')
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'drewtempelmeyer/palenight.vim'
-    call plug#end()
-
-    "coc configurations 
-    " use <tab> for trigger completion and navigate to the next complete item
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-
-    inoremap <silent><expr> <Tab>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<Tab>" :
-          \ coc#refresh()
-
-    "palenight configurations
-    set background=dark
-    colorscheme palenight
-    let g:lightline = { 'colorscheme': 'palenight' }
-    let g:airline_theme = "palenight"
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    let g:palenight_terminal_italics=1
-    let g:palenight_color_overrides = {
-    \    'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" },
-    \}
-endif
-
-" Polygot Plugin -> Mostly for syntax highlighting and few more features.
-if !has('nvim')
-    call plug#begin()
-    Plug 'sheerun/vim-polyglot'
-    call plug#end()
-
-    if !empty(glob("~/.vim/plugged/fzf.vim"))
-        call plug#begin()
-        Plug 'junegunn/fzf'
-        Plug 'junegunn/fzf.vim'
-        call plug#end()
-
-        "Map Ctrl + / to fzf search for all files in current directory.
-        nnoremap  :Files<cr>
-        "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
-
-        "Map Ctrl + \ to fzf search for git files in current directory.
-        nnoremap  :GFiles?<cr>
-        "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
-    endif
+    set mouse=a
 endif
 
 "Custom undo file.
@@ -101,7 +53,57 @@ set incsearch
 set hlsearch
 set wrap
 set nocursorline
+set updatetime=300
+set timeoutlen=500
+set clipboard=unnamedplus
 
+
+if has('nvim') 
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'drewtempelmeyer/palenight.vim'
+        Plug 'vim-airline/vim-airline'
+    call plug#end()
+
+    "coc configurations 
+    " use <tab> for trigger completion and navigate to the next complete item
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+
+    inoremap <silent><expr> <Tab>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<Tab>" :
+          \ coc#refresh()
+
+    "palenight configurations
+    set background=dark
+    colorscheme palenight
+    let g:lightline = { 'colorscheme': 'palenight' }
+    let g:airline_theme = "palenight"
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    let g:palenight_terminal_italics=1
+    let g:palenight_color_overrides = {
+    \    'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" },
+    \}
+endif
+
+if !has('nvim')
+    if !empty(glob("~/.vim/plugged/fzf.vim"))
+        call plug#begin()
+        Plug 'junegunn/fzf'
+        Plug 'junegunn/fzf.vim'
+        call plug#end()
+
+        "Map Ctrl + / to fzf search for all files in current directory.
+        nnoremap  :Files<cr>
+        "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+
+        "Map Ctrl + \ to fzf search for git files in current directory.
+        nnoremap  :GFiles?<cr>
+        "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
+    endif
+endif
 
 function! Nun()
     let cb = @%
@@ -145,7 +147,12 @@ inoremap II <Esc>I
 inoremap AA <Esc>A
 "inoremap OO <Esc>O
 "inoremap oo <Esc>o
-inoremap OM <Esc>O
+
+if !has('nvim')
+    inoremap OM <Esc>O
+else
+    inoremap  <Esc>O
+endif
 
 nnoremap OO O<Esc>
 "nnoremap oo o<Esc>
@@ -159,9 +166,21 @@ nnoremap <space> :noh<cr><C-g>
 nnoremap <C-a>      :tabprevious<CR>
 nnoremap <C-d>      :tabnext<CR>
 nnoremap <C-t>      :tabnew<CR>
-inoremap <C-a>      <Esc>:tabprevious<CR>i
-inoremap <C-d>      <Esc>:tabnext<CR>i
-inoremap <C-t>      <Esc>:tabnew<CR>
+"inoremap <C-a>      <Esc>:tabprevious<CR>i
+"inoremap <C-d>      <Esc>:tabnext<CR>i
+"inoremap <C-t>      <Esc>:tabnew<CR>
+
+" Use alt + hjkl to resize windows
+nnoremap <M-j>    :resize -2<CR>
+nnoremap <M-k>    :resize +2<CR>
+nnoremap <M-h>    :vertical resize -2<CR>
+nnoremap <M-l>    :vertical resize +2<CR>
+
+" Better tabbing
+vnoremap < <gv
+vnoremap > >gv
+nnoremap < <<
+nnoremap > >>
 
 function! CloseBuffer()
     let cb = @%
@@ -183,34 +202,20 @@ nnoremap <leader>a  :wincmd h<CR>
 nnoremap <leader>d  :wincmd l<CR>
 nnoremap <leader>w  :wincmd k<CR>
 nnoremap <leader>s  :wincmd j<CR>
-nnoremap <silent> <leader>+ :vertical resize +10<CR>
-nnoremap <silent> <leader>- :vertical resize -10<CR>
 nnoremap <leader>ps :Lex<cr> :vertical resize 30<CR>
 nnoremap <leader>pg :Rg<SPACE>
 
+nnoremap <leader>gf :wincmd gf<cr>
+nnoremap <leader>pp :set paste!<cr> 
+nnoremap <leader>nn :set nu! <bar> :set rnu!<CR>
+
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>:echo $MYVIMRC "sourced.."<CR>
-
-" nnoremap <leader>/ :noh<cr>
-" nnoremap <tab> %
-" vnoremap <tab> %
 
 "Visual mode movements
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap <space> <esc>
-
-vnoremap <leader>cp :s!^!# !<CR>:nohlsearch<CR>
-vnoremap <leader>cm :s!^!%# !<CR>:nohlsearch<CR>
-vnoremap <leader>cj :s!^!// !<CR>:nohlsearch<CR>
-nnoremap <leader>cp :s!^!# !<CR>:nohlsearch<CR>
-nnoremap <leader>cm :s!^!%# !<CR>:nohlsearch<CR>
-nnoremap <leader>cj :s!^!// !<CR>:nohlsearch<CR>
-
-"nnoremap <leader>w :w!<CR> 
-nnoremap <leader>ft vatzf
-nnoremap <leader>fB va{zf
-nnoremap <leader>fb va(zf
 
 nnoremap N Nzz
 nnoremap n nzz
@@ -218,18 +223,3 @@ nnoremap n nzz
 "Command mode remaps
 cnoremap jk <C-u><esc><C-g>
 
-"highlight current line
-"set cul
-"hi CursorLine term=none cterm=none ctermbg=195
-
-nnoremap <leader>gf :wincmd gf<cr>
-nmap <leader>pp :set paste!<cr> 
-
-
-" Relative or absolute number lines
-function! NumberToggle()
-        set nu!
-        set rnu!
-endfunction
-
-nnoremap <leader>nn :set nu! <bar> :set rnu!<CR>
