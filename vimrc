@@ -13,6 +13,7 @@ filetype plugin on
 
 let mapleader = ","
 
+"--------------------------------------------------SET PROPS--------------------------------------------------"
 set hidden
 set nocompatible
 set path+=$PWD/**
@@ -20,7 +21,7 @@ set path+=$PWD/**
 "Custom undo file.
 set nobackup
 set noswapfile
-set undodir=~/.vim/undodir
+set undodir=~/.vim/
 set undofile
 " set nowritebackup
 
@@ -53,18 +54,28 @@ set nocursorline
 set updatetime=300
 set timeoutlen=500
 set clipboard=unnamedplus
-:set list lcs=tab:\|\ 
 
 
+"--------------------------------------------------PLUGINS--------------------------------------------------"
 if has('nvim') 
-    call plug#begin('~/.vim/plugged')
+    call plug#begin('~/.config/nvim/autoload')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'drewtempelmeyer/palenight.vim'
+        Plug 'lukas-reineke/indent-blankline.nvim'
         Plug 'vim-airline/vim-airline'
         Plug 'akinsho/toggleterm.nvim'
+    	Plug 'junegunn/fzf'
+    	Plug 'junegunn/fzf.vim'
     call plug#end()
+else
+    call plug#begin()
+        Plug 'junegunn/fzf'
+        Plug 'junegunn/fzf.vim'
+    call plug#end()
+endif
 
-    "coc configurations 
+"-----------------------------------------------CONFIGURATIONS------------------------------------------------"
+if has('nvim')
+    "COC CONFIGURATIONS 
     " use <tab> for trigger completion and navigate to the next complete item
     function! s:check_back_space() abort
       let col = col('.') - 1
@@ -76,36 +87,12 @@ if has('nvim')
           \ <SID>check_back_space() ? "\<Tab>" :
           \ coc#refresh()
 
-    "palenight configurations
-    set background=dark
-    colorscheme palenight
-    let g:lightline = { 'colorscheme': 'palenight' }
-    let g:airline_theme = "palenight"
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    let g:palenight_terminal_italics=1
-    let g:palenight_color_overrides = {
-    \    'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" },
-    \}
-
+    "GUI MODE
     set mouse=a
-    nnoremap <silent><c-_> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+else
 endif
 
-if !empty(glob("~/.vim/plugged/fzf.vim"))
-    call plug#begin()
-    Plug 'junegunn/fzf'
-    Plug 'junegunn/fzf.vim'
-    call plug#end()
-
-    "Map Ctrl + / to fzf search for all files in current directory.
-    nnoremap  :Files<cr>
-    "nnoremap  :FZF -m --prompt ~/ --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
-
-    "Map Ctrl + \ to fzf search for git files in current directory.
-    nnoremap  :GFiles?<cr>
-    "nnoremap  :FZF -m --prompt ~/ 'gitfiles?> ' --expect=ctrl-v,ctrl-x,ctrl-t --no-height<CR>
-endif
-
+"--------------------------------------------------FUNCTIONS--------------------------------------------------"
 function! Nun()
     let cb = @%
     let line_no = line(".")
@@ -124,9 +111,15 @@ function! Nun()
         silent execute ":".line_no
     endif
 endfunction
-"
-"nnoremap <silent> <leader>nun :call Nun()<CR><C-g>:echo "Deleted undo files.."<CR>
-:command! Clear :call Nun()
+
+function! CloseBuffer()
+    let cb = @%
+    if cb != ''
+        :bdelete
+    else
+        :q
+    endif
+endfunction
 
 
 " GIT EDITS
@@ -137,23 +130,18 @@ function! GitWindow()
     let op = system(cmd)
     e ~/tmp/git_files
 endfunction
-nnoremap <leader>/ :call GitWindow()<cr> 
 
+
+"--------------------------------------------------ALIASES--------------------------------------------------"
 " Quick Escape
 inoremap jk <Esc>cal cursor(line('.'),virtcol('.'))<cr>
 "inoremap kj <Esc>cal cursor(line('.'),virtcol('.'))<cr>
-
+"
 "Quick movements
 inoremap II <Esc>I
 inoremap AA <Esc>A
 "inoremap OO <Esc>O
 "inoremap oo <Esc>o
-
-if !has('nvim')
-    inoremap OM <Esc>O
-else
-    inoremap  <Esc>O
-endif
 
 nnoremap OO O<Esc>
 "nnoremap oo o<Esc>
@@ -163,6 +151,12 @@ nnoremap k gk
 
 nnoremap <space> :noh<cr><C-g>
 
+nnoremap <leader>/ :call GitWindow()<cr> 
+
+:command! Clear :call Nun()
+
+nnoremap  :Files<cr>
+nnoremap  :GFiles?<cr>
 "TAB OPERATIONS HERE 
 nnoremap <C-a>      :tabprevious<CR>
 nnoremap <C-d>      :tabnext<CR>
@@ -182,15 +176,6 @@ vnoremap < <gv
 vnoremap > >gv
 nnoremap < <<
 nnoremap > >>
-
-function! CloseBuffer()
-    let cb = @%
-    if cb != ''
-        :bdelete
-    else
-        :q
-    endif
-endfunction
 
 nnoremap <C-w>      :call CloseBuffer()<CR>:echo "Buffer closed.."<cr>
 "inoremap <C-w>      <Esc>:q<CR>
