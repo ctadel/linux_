@@ -25,6 +25,7 @@ set undodir=~/.vim/
 set undofile
 " set nowritebackup
 
+set ttyfast
 set relativenumber
 set number
 " iskeyword to set a character as a part of key
@@ -41,7 +42,7 @@ set autoindent
 set showcmd
 set wildmenu
 set wildmode=list:longest,full
-set ttyfast
+set termguicolors
 set backspace=indent,eol,start
 set laststatus=2
 set ignorecase
@@ -65,6 +66,7 @@ if has('nvim')
         Plug 'akinsho/toggleterm.nvim'
     	Plug 'junegunn/fzf'
     	Plug 'junegunn/fzf.vim'
+        Plug 'sonph/onehalf', { 'rtp': 'vim' }
     call plug#end()
 else
     call plug#begin()
@@ -75,20 +77,82 @@ endif
 
 "-----------------------------------------------CONFIGURATIONS------------------------------------------------"
 if has('nvim')
-    "COC CONFIGURATIONS 
-    " use <tab> for trigger completion and navigate to the next complete item
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-
-    inoremap <silent><expr> <Tab>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<Tab>" :
-          \ coc#refresh()
-
     "GUI MODE
-    set mouse=a
+        set mouse=a
+
+    "COC CONFIGURATIONS 
+        "Tab for autocompletions
+        function! s:check_back_space() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~ '\s'
+        endfunction
+
+        inoremap <silent><expr> <Tab>
+              \ pumvisible() ? "\<C-n>" :
+              \ <SID>check_back_space() ? "\<Tab>" :
+              \ coc#refresh()
+
+        " GoTo code navigation.
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+        " Use K to show documentation in preview window.
+        nnoremap <silent> K :call <SID>show_documentation()<CR>
+        function! s:show_documentation()
+          if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+          elseif (coc#rpc#ready())
+            call CocActionAsync('doHover')
+          else
+            execute '!' . &keywordprg . " " . expand('<cword>')
+          endif
+        endfunction       " use <tab> for trigger completion and navigate to the next complete item
+
+    "THEME
+        let g:lightline = { 'colorscheme': 'onehalfdark' }
+        colorscheme onehalfdark
+
+    "TOGGLE TERM
+        autocmd TermEnter term://*toggleterm#*
+              \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+        " By applying the mappings this way you can pass a count to your
+        " mapping to open a specific window.
+        " For example: 2<C-t> will open terminal 2
+        nnoremap <silent><c-k> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+        lua <<EOF
+        function _G.set_terminal_keymaps()
+          local opts = {noremap = true}
+          vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+        end
+
+        -- if you only want these mappings for toggle term use term://*toggleterm#* instead
+        vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+EOF
+
+    " FZF CONFIGURATIONS
+        command! -bang -nargs=? -complete=dir Files
+            \ call fzf#vim#files(<q-args>, {'options': ['--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+        
+        " Hide status line while fzf
+        autocmd! FileType fzf set laststatus=0 noshowmode noruler
+          \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+        "Git Grep from vim
+        command! -bang -nargs=* GGrep
+          \ call fzf#vim#grep(
+          \   'git grep --line-number -- '.shellescape(<q-args>), 0,
+          \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
+    "AIRLINE CUSTOMIZATION
+        "Enables noice angled view in status bar
+        let g:airline_powerline_fonts = 1
+        "customize Z section by removies unclear symbols
+        let g:airline_section_y = ''
+        au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
+
 else
 endif
 
@@ -136,7 +200,7 @@ endfunction
 " Quick Escape
 inoremap jk <Esc>cal cursor(line('.'),virtcol('.'))<cr>
 "inoremap kj <Esc>cal cursor(line('.'),virtcol('.'))<cr>
-"
+
 "Quick movements
 inoremap II <Esc>I
 inoremap AA <Esc>A

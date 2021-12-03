@@ -18,6 +18,7 @@ red=$(tput setaf 1)
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
+COLORTERM="truecolor"
 
 function extract {
  if [ -z "$1" ]; then
