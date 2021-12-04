@@ -2,7 +2,7 @@
 export LIN_=$HOME/gitlib/linux_
 read -p "Syncronize linux_ files to local server?(yes/*): " confirm
 if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
-    ln -sf $LIN_/vimrc ~/.vimrc
+    ln -sf $LIN_/vimrc.vim ~/.vimrc
     ln -sf $LIN_/bashpd ~/.bashpd
     ln -sf $LIN_/inputrc ~/.inputrc
     ln -sf $LIN_/psqlrc ~/.psqlrc
@@ -10,7 +10,7 @@ if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
         if ! [ -d  ~/.config/nvim ]; then
             mkdir -p ~/.config/nvim
         fi
-        ln -sf $LIN_/vimrc ~/.config/nvim/init.vim
+        ln -sf $LIN_/vimrc.vim ~/.config/nvim/init.vim
     fi
     printf "${green}Sync'd linux_ files to local Server.${normal}\n"
 else
