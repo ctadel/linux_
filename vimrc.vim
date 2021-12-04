@@ -42,7 +42,6 @@ set autoindent
 set showcmd
 set wildmenu
 set wildmode=list:longest,full
-set termguicolors
 set backspace=indent,eol,start
 set laststatus=2
 set ignorecase
@@ -59,6 +58,7 @@ set clipboard=unnamedplus
 
 "--------------------------------------------------PLUGINS--------------------------------------------------"
 if has('nvim') 
+    set termguicolors
     call plug#begin('~/.config/nvim/autoload')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'lukas-reineke/indent-blankline.nvim'
