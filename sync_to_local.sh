@@ -4,13 +4,17 @@ read -p "Syncronize linux_ files to local server?(yes/*): " confirm
 if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
     ln -sf $LIN_/vimrc.vim ~/.vimrc
     ln -sf $LIN_/bashpd ~/.bashpd
-    ln -sf $LIN_/inputrc ~/.inputrc
     ln -sf $LIN_/psqlrc ~/.psqlrc
     if [ -f  /usr/bin/nvim ]; then
         if ! [ -d  ~/.config/nvim ]; then
             mkdir -p ~/.config/nvim
         fi
         ln -sf $LIN_/vimrc.vim ~/.config/nvim/init.vim
+    fi
+
+    read -p "Sync inutrc?(yes/*): " confirm2
+    if [[ $confirm2 == [yY] || $confirm2 == [yY][eE][sS] ]];then
+        ln -sf $LIN_/inputrc ~/.inputrc
     fi
     printf "${green}Sync'd linux_ files to local Server.${normal}\n"
 else

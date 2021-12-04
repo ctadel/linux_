@@ -79,6 +79,7 @@ lua<<EOF
     }
 EOF
     nnoremap <C-n> :NvimTreeFocus<CR>
+    nnoremap <leader>n :NvimTreeToggle<CR>
 
     highlight NvimTreeFolderIcon guibg=blue
 
