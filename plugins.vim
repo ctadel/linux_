@@ -153,35 +153,49 @@ nnoremap <C-w>      :bdelete<CR>:NvimTreeClose<CR>:NvimTreeOpen<CR>:wincmd l<CR>
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
     
 "COC CONFIGURATIONS 
-    "Tab for autocompletions
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
     function! s:check_back_space() abort
       let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
+      return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
 
-    inoremap <silent><expr> <Tab>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<Tab>" :
-          \ coc#refresh()
+    " Use <c-space> to trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+    " Use <cr> to confirm completion
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-    " GoTo code navigation.
+    " Remap keys for gotos
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)nnoremap <silent> K :call <SID>show_documentation()<CR>
+    nmap <silent> gr <Plug>(coc-references)
 
-    " Use K to show documentation in preview window.
+    " Use K to show documentation in preview window
     nnoremap <silent> K :call <SID>show_documentation()<CR>
+
     function! s:show_documentation()
       if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
-      elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
       else
-        execute '!' . &keywordprg . " " . expand('<cword>')
+        call CocAction('doHover')
       endif
-    endfunction       " use <tab> for trigger completion and navigate to the next complete item
+    endfunction
 
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    " Remap for rename current word
+    nmap <leader>rn <Plug>(coc-rename)
+
+    " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+    nmap <silent> <TAB> <Plug>(coc-range-select)
+    xmap <silent> <TAB> <Plug>(coc-range-select)
+    xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 "---------------------------------------------- FUZZY FILE FINDER ----------------------------------------------"
 
