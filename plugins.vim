@@ -8,9 +8,9 @@ lua<<EOF
     require'nvim-tree'.setup {
       disable_netrw       = false,
       hijack_netrw        = true,
-      open_on_setup       = true,
+      open_on_setup       = false,
       ignore_ft_on_setup  = {},
-      auto_close          = false,
+      auto_close          = true,
       open_on_tab         = true,
       hijack_cursor       = true,
       update_cwd          = true,
@@ -78,10 +78,26 @@ lua<<EOF
      default = true;
     }
 EOF
-    nnoremap <C-n> :NvimTreeFocus<CR>
-    nnoremap <leader>n :NvimTreeToggle<CR>
+
+    nnoremap <leader>n :NvimTreeClose<CR>
+    nnoremap <silent><C-w>     :bdelete<CR>:NvimTreeClose<CR>:NvimTreeOpen<CR>:wincmd l<CR>
+
+    let @y = 0                      " Register NvimTree as Unfocused in default
+    function! FocusUnfocus()
+        let focus_status = @y
+        if focus_status == 1
+            let @y = 0
+            wincmd l
+        else
+            let @y = 1
+            NvimTreeFocus
+        endif
+    endfunction
+    nnoremap <silent><C-n>     :call FocusUnfocus()<CR>
 
     highlight NvimTreeFolderIcon guibg=blue
+
+
 
 "-------------------------------------------------- BUFFERLINE --------------------------------------------------"
 
@@ -131,9 +147,6 @@ EOF
           }
         }
 EOF
-
-nnoremap <C-w>      :bdelete<CR>:NvimTreeClose<CR>:NvimTreeOpen<CR>:wincmd l<CR>
-
 
 "-------------------------------------------------- ONEHALF-DARK --------------------------------------------------"
 
@@ -222,3 +235,18 @@ nnoremap <C-w>      :bdelete<CR>:NvimTreeClose<CR>:NvimTreeOpen<CR>:wincmd l<CR>
     let g:airline_section_y = ''
     au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
 
+
+
+"---------------------------------------------- STARTIFY ----------------------------------------------"
+    let g:startify_padding_left = 3
+    let g:startify_custom_header = [
+                \ ' ################################################ ',
+                \ ' ##          __              .___     .__      ## ',
+                \ ' ##    _____/  |______     __| _/____ |  |     ## ',
+                \ ' ##  _/ ___\   __\__  \   / __ |/ __ \|  |     ## ',
+                \ ' ##  \  \___|  |  / __ \_/ /_/ \  ___/|  |__   ## ',
+                \ ' ##   \___  >__| (____  /\____ |\___  >____/   ## ',
+                \ ' ##       \/          \/      \/    \/         ## ',
+                \ ' ##                                            ## ',
+                \ ' ################################################ ',
+                \ ]
