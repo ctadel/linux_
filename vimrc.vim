@@ -74,6 +74,7 @@ if has('nvim')
         Plug 'akinsho/bufferline.nvim'
         Plug 'mhinz/vim-startify'
         Plug 'jiangmiao/auto-pairs'
+        Plug 'APZelos/blamer.nvim'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim
