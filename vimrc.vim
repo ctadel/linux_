@@ -95,10 +95,6 @@ autocmd FileType css setlocal shiftwidth=4 tabstop=4
 autocmd FileType vim setlocal shiftwidth=4 tabstop=4
 autocmd FileType conf setlocal shiftwidth=4 tabstop=4
 
-if &filetype ==# 'py'
-    nnoremap <F5> :!python3 %<cr>
-endif
-
 "--------------------------------------------------FUNCTIONS--------------------------------------------------"
 function! Nun()
     let cb = @%

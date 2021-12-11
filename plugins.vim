@@ -1,5 +1,5 @@
 "GUI MODE
-    set mouse=n         "Can control mouse in NORMAL mode but in CLI based window when in INSERT mode..
+    set mouse=a         "n -> Can control mouse in NORMAL mode but in CLI based window when in INSERT mode..
 
 "-------------------------------------------------- NVIM-TREE --------------------------------------------------"
 "NVIM TREE CONFIGURATIONS
@@ -79,7 +79,7 @@ lua<<EOF
     }
 EOF
 
-    nnoremap <leader>n :NvimTreeClose<CR>
+    nnoremap <F10> :NvimTreeClose<CR>
     nnoremap <silent><C-w>     :bdelete<CR>:NvimTreeClose<CR>:NvimTreeOpen<CR>:wincmd l<CR>
 
     let @y = 0                      " Register NvimTree as Unfocused in default
@@ -162,6 +162,7 @@ EOF
 
     nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
+    nnoremap <F5> :TermExec cmd="python3 %"<CR>:wincmd j<CR>
 
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
     
@@ -226,6 +227,9 @@ EOF
       \   'git grep --line-number -- '.shellescape(<q-args>), 0,
       \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
+    nnoremap <C-g> :GGrep<CR>
+    nnoremap  :Files<cr>
+    nnoremap  :GFiles?<cr>
 
 
 "---------------------------------------------- AIRLINE ----------------------------------------------"
@@ -255,5 +259,6 @@ EOF
 "---------------------------------------------- GIT BLAMER ----------------------------------------------"
 let g:blamer_enabled = 1
 let g:blamer_show_in_insert_modes = 0
+let g:blamer_show_in_visual_modes = 0
 let g:blamer_delay = 500
 let g:blamer_relative_time = 1
