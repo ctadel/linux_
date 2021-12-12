@@ -93,6 +93,7 @@ else
         Plug 'junegunn/fzf.vim'
         Plug 'jiangmiao/auto-pairs'
     call plug#end()
+    colorscheme onehalflight
 endif
 
 "---------------------------------------------FILE TYPE CONFIG------------------------------------------------"
@@ -152,7 +153,7 @@ nnoremap <space> :noh<cr><C-g>
 
 nnoremap <leader>/ :call GitWindow()<cr> 
 
-command -nargs=0 ClearUndo call <SID>ForgetUndo()
+command! -nargs=0 ClearUndo call <SID>ForgetUndo()
 
 "TAB OPERATIONS HERE     @@@@@@ USING BUFFERS NOW @@@@@@
 nnoremap <leader>,      :tabprevious<CR>
@@ -205,11 +206,7 @@ nnoremap n nzz
 "Command mode remaps
 cnoremap jk <C-u><esc><C-g>
 
-"Plugin Configurations
-"THEME
-let g:lightline = { 'colorscheme': 'onehalfdark' }
-colorscheme onehalfdark
-
+"--------------------------------------------------VIM PluginConfigurations-----------------------------------------------"
 "FZF
 nnoremap  :Files<cr>
 nnoremap  :GFiles?<cr>
