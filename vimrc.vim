@@ -93,7 +93,6 @@ else
         Plug 'junegunn/fzf.vim'
         Plug 'jiangmiao/auto-pairs'
     call plug#end()
-    colorscheme onehalflight
 endif
 
 "---------------------------------------------FILE TYPE CONFIG------------------------------------------------"
@@ -207,6 +206,9 @@ nnoremap n nzz
 cnoremap jk <C-u><esc><C-g>
 
 "--------------------------------------------------VIM PluginConfigurations-----------------------------------------------"
+"Theme
+colorscheme onehalfdark
+
 "FZF
 nnoremap  :Files<cr>
 nnoremap  :GFiles?<cr>
