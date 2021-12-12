@@ -103,23 +103,13 @@ autocmd FileType vim setlocal shiftwidth=4 tabstop=4
 autocmd FileType conf setlocal shiftwidth=4 tabstop=4
 
 "--------------------------------------------------FUNCTIONS--------------------------------------------------"
-function! Nun()
-    let cb = @%
-    let line_no = line(".")
-    if cb == ''
-        let cmd = "rm ~/.vim/undodir/*"
-        let op = system(cmd)
-    else
-        vsp new                            "creating new temporary buffer 
-        wincmd l                           "switching to new buffer
-        wq                                 "closing main buffer
-        let cmd = "rm ~/.vim/undodir/*"
-        let op = system(cmd)                "performing CLEAN operation
-        execute "vsp".cb
-        wincmd l                           "opened and now switching to main buffer
-        q!                                 "closing the temporary 'new' buffer
-        silent execute ":".line_no
-    endif
+"Function to Clear History traces or in simple words deletes undo files
+function! <SID>ForgetUndo()
+    let old_undolevels = &undolevels
+    set undolevels=-1
+    exe "normal a \<BS>\<Esc>"
+    let &undolevels = old_undolevels
+    unlet old_undolevels
 endfunction
 
 function! CloseBuffer()
@@ -162,7 +152,7 @@ nnoremap <space> :noh<cr><C-g>
 
 nnoremap <leader>/ :call GitWindow()<cr> 
 
-:command! Clear :call Nun()
+command -nargs=0 ClearUndo call <SID>ForgetUndo()
 
 "TAB OPERATIONS HERE     @@@@@@ USING BUFFERS NOW @@@@@@
 nnoremap <leader>,      :tabprevious<CR>
