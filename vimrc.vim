@@ -18,13 +18,6 @@ set hidden
 set nocompatible
 set path+=$PWD/**
 
-"Custom undo file.
-set nobackup
-set noswapfile
-set undodir=~/.vim/
-set undofile
-" set nowritebackup
-
 set ttyfast
 set relativenumber
 set number
@@ -56,8 +49,16 @@ set timeoutlen=500
 set clipboard=unnamedplus
 
 
+"Custom undo file.
+set nobackup
+set noswapfile
+set undodir=~/.vim/undodir/
+set undofile
+" set nowritebackup
+
 "--------------------------------------------------PLUGINS--------------------------------------------------"
 if has('nvim') 
+    set undodir=~/.config/nvim/undodir/
     set termguicolors
     set signcolumn=yes
 
@@ -83,8 +84,14 @@ if has('nvim')
     endtry
 else
     call plug#begin()
+        Plug 'bling/vim-bufferline'
+        Plug 'mhinz/vim-startify'
+        Plug 'lukas-reineke/indent-blankline.nvim'
+        Plug 'vim-airline/vim-airline'
+        Plug 'sonph/onehalf', { 'rtp': 'vim' }
         Plug 'junegunn/fzf'
         Plug 'junegunn/fzf.vim'
+        Plug 'jiangmiao/auto-pairs'
     call plug#end()
 endif
 
@@ -157,9 +164,6 @@ nnoremap <leader>/ :call GitWindow()<cr>
 
 :command! Clear :call Nun()
 
-nnoremap  :Files<cr>
-nnoremap  :GFiles?<cr>
-
 "TAB OPERATIONS HERE     @@@@@@ USING BUFFERS NOW @@@@@@
 nnoremap <leader>,      :tabprevious<CR>
 nnoremap <leader>.      :tabnext<CR>
@@ -211,3 +215,16 @@ nnoremap n nzz
 "Command mode remaps
 cnoremap jk <C-u><esc><C-g>
 
+"Plugin Configurations
+"THEME
+let g:lightline = { 'colorscheme': 'onehalfdark' }
+colorscheme onehalfdark
+
+"FZF
+nnoremap  :Files<cr>
+nnoremap  :GFiles?<cr>
+
+"Powerline
+let g:airline_powerline_fonts = 1
+let g:airline_section_y = ''
+au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
