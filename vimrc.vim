@@ -47,16 +47,16 @@ set timeoutlen=500
 set clipboard=unnamedplus
 
 
-"Custom undo file.
-set nobackup
-set noswapfile
-set undodir=~/.vim/undodir/
-set undofile
-" set nowritebackup
+if has('nvim') 
+    "Custom undo file.
+    set nobackup
+    set noswapfile
+    set undodir=~/.config/nvim/undo/
+    set undofile
+endif
 
 "--------------------------------------------------PLUGINS--------------------------------------------------"
 if has('nvim') 
-    set undodir=~/.config/nvim/undodir/
     set termguicolors
     set signcolumn=yes
 
@@ -202,6 +202,15 @@ nnoremap n nzz
 
 "Command mode remaps
 cnoremap jk <C-u><esc><C-g>
+
+
+" Map the <Space> key to toggle a selected fold opened/closed.
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+"Autosave folds
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
 
 "--------------------------------------------------VIM PluginConfigurations-----------------------------------------------"
 "Theme
