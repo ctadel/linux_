@@ -74,6 +74,7 @@ if has('nvim')
         Plug 'mhinz/vim-startify'
         Plug 'jiangmiao/auto-pairs'
         Plug 'APZelos/blamer.nvim'
+        Plug 'alvan/vim-closetag'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim
@@ -90,6 +91,7 @@ else
         Plug 'junegunn/fzf'
         Plug 'junegunn/fzf.vim'
         Plug 'jiangmiao/auto-pairs'
+        Plug 'alvan/vim-closetag'
     call plug#end()
 endif
 
@@ -142,6 +144,9 @@ inoremap jk <Esc>cal cursor(line('.'),virtcol('.'))<cr>
 
 nnoremap OO o<Esc>
 "nnoremap oo o<Esc>
+inoremap <C-j> <nop>
+inoremap <C-k> <nop>
+inoremap <C-l> <nop>
 
 nnoremap j gj
 nnoremap k gk
@@ -209,15 +214,15 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
 "Autosave folds
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+"autocmd BufWinLeave *.* mkview
+"autocmd BufWinEnter *.* silent loadview
 
 "--------------------------------------------------VIM PluginConfigurations-----------------------------------------------"
+
 "Theme
 colorscheme onehalfdark
 
-"FZF
-"Git Grep from vim
+" FZF and Git Grep from vim
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep(
   \   'git grep --line-number -- '.shellescape(<q-args>), 0,
@@ -231,3 +236,6 @@ nnoremap  :GFiles?<cr>
 let g:airline_powerline_fonts = 1
 let g:airline_section_y = ''
 au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
+
+"HTML Autoclose
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
