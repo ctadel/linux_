@@ -1,8 +1,11 @@
 \set QUIET 1
 
 select case when inet_server_addr()='127.0.0.1' or inet_server_addr() is null then '' else '[REMOTE] ' end as server \gset
+
+/*
 \set PROMPT1 '%[%033[0;31m%]%:server:%[%033[0m%]%/%R%# '
 \set PROMPT2 '=> '
+*/
 
 \pset null 'NULL'
 \timing
