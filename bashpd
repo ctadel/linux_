@@ -18,6 +18,9 @@ blue=$(tput setaf 4)
 normal=$(tput sgr0)
 COLORTERM="truecolor"
 
+export PAGER=off
+export EDITOR=vi
+
 function extract {
  if [ -z "$1" ]; then
     # display usage if no parameters given
