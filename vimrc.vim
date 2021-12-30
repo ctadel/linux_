@@ -238,4 +238,4 @@ let g:airline_section_y = ''
 au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
 
 "HTML Autoclose
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_filenames = '*.js,*.html,*.xhtml,*.phtml'
