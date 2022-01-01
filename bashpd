@@ -73,7 +73,6 @@ do
     baseName=".${i}"
     alias $baseName="cd ${dotSlash}"
 done
-alias ..='cd ..'
 
 function fn (){
    local keyword=$1
