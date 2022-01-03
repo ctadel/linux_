@@ -8,7 +8,7 @@ select case when inet_server_addr()='127.0.0.1' or inet_server_addr() is null th
 \set PROMPT2 '=> '
 
 \pset null 'NULL'
-\pset pager off
+\pset pager always
 
 \timing
 \x auto
