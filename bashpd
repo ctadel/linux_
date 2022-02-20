@@ -96,13 +96,14 @@ alias pymr='python manage.py runserver 0.0.0.0:8000'
 
 ########################################| GIT SETTINGS START |########################################
 
-alias gl='git log'
+alias gl='git log --graph'
 alias grl='git reflog'
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
 alias gp='git pull'
 alias go='git checkout'
+alias goa='git checkout .'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gg='git grep'
