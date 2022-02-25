@@ -82,6 +82,7 @@ if has('nvim')
         "No plugin file to source :(
     endtry
 else
+    nnoremap <silent><C-w>     :bdelete<CR>
     call plug#begin()
         Plug 'bling/vim-bufferline'
         Plug 'mhinz/vim-startify'
