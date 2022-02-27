@@ -83,6 +83,7 @@ if has('nvim')
     endtry
 else
     nnoremap <silent><C-w>     :bdelete<CR>
+    nnoremap <silent><C-l>     :noh<CR>
     call plug#begin()
         Plug 'bling/vim-bufferline'
         Plug 'mhinz/vim-startify'
