@@ -262,3 +262,12 @@ let g:blamer_show_in_insert_modes = 0
 let g:blamer_show_in_visual_modes = 0
 let g:blamer_delay = 500
 let g:blamer_relative_time = 1
+
+
+"------------------------------------------ SESSION PERSISTANCE ------------------------------------------"
+lua << EOF
+  require("persistence").setup {
+      options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+      vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]])
+  }
+EOF

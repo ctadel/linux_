@@ -44,13 +44,13 @@ set wrap
 set nocursorline
 set updatetime=300
 set timeoutlen=500
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
+set noswapfile
 
 
 if has('nvim') 
     "Custom undo file.
     set nobackup
-    set noswapfile
     set undodir=~/.config/nvim/undo/
     set undofile
 endif
@@ -75,6 +75,7 @@ if has('nvim')
         Plug 'jiangmiao/auto-pairs'
         Plug 'APZelos/blamer.nvim'
         Plug 'alvan/vim-closetag'
+        Plug 'folke/persistence.nvim'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim

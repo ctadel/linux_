@@ -230,7 +230,7 @@ fi
 
 if [ -f  /usr/bin/psql ]; then
     alias psql="psql -Uctadel -dtradeindia --set PROMPT1='%[%033[0;34m%]%(LOCAL) %[%033[0m%]%/%R%# '"
-    alias tipsql="psql -h192.168.1.208 -dtradein_clients -Utradein  --set PROMPT1='%[%033[0;34m%]%(LOCAL) %[%033[0m%]%/%R%# '"
+    alias tipsql="psql -h192.168.1.208 -dtradein_clients -Utradein  --set PROMPT1='%[%033[0;36m%]%(LOCAL) %[%033[0m%]%/%R%# '"
     alias rpsql="psql -h34.93.71.99 -dtradein_clients -Utradein_dev --set PROMPT1='%[%033[0;31m%]%(REMOTE) %[%033[0m%]%/%R%# '"
 fi
 
