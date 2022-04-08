@@ -47,12 +47,17 @@ set timeoutlen=500
 set clipboard+=unnamedplus
 set noswapfile
 
-
 if has('nvim') 
     "Custom undo file.
     set nobackup
     set undodir=~/.config/nvim/undo/
     set undofile
+
+    function! <SID>Session()
+        lua require("persistence").load()
+    endfunction
+
+    command! -nargs=0 Session call <SID>Session()
 endif
 
 "--------------------------------------------------PLUGINS--------------------------------------------------"
