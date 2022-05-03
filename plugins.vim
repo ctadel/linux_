@@ -269,3 +269,6 @@ lua << EOF
   require("persistence").setup {
   }
 EOF
+
+"------------------------------------------ TRAILING WHITE SPACE ------------------------------------------"
+let g:better_whitespace_guicolor='Maroon'

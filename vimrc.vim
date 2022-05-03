@@ -81,12 +81,14 @@ if has('nvim')
         Plug 'APZelos/blamer.nvim'
         Plug 'alvan/vim-closetag'
         Plug 'folke/persistence.nvim'
+        Plug 'ntpeters/vim-better-whitespace'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim
     catch
         "No plugin file to source :(
     endtry
+    nnoremap <silent><C-w>     :bdelete<CR>
 else
     nnoremap <silent><C-w>     :bdelete<CR>
     nnoremap <silent><C-l>     :noh<CR>
