@@ -47,7 +47,7 @@ set timeoutlen=500
 set clipboard+=unnamedplus
 set noswapfile
 
-if has('nvim') 
+if has('nvim')
     "Custom undo file.
     set nobackup
     set undodir=~/.config/nvim/undo/
@@ -61,7 +61,7 @@ if has('nvim')
 endif
 
 "--------------------------------------------------PLUGINS--------------------------------------------------"
-if has('nvim') 
+if has('nvim')
     set termguicolors
     set signcolumn=yes
 
@@ -163,7 +163,7 @@ nnoremap k gk
 
 nnoremap <space> :noh<cr><C-g>
 
-nnoremap <leader>/ :call GitWindow()<cr> 
+nnoremap <leader>/ :call GitWindow()<cr>
 
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
 
@@ -201,7 +201,7 @@ nnoremap <leader>ps :Lex<cr> :vertical resize 30<CR>
 nnoremap <leader>pg :Rg<SPACE>
 
 nnoremap <leader>gf :wincmd gf<cr>
-nnoremap <leader>pp :set paste!<cr> 
+nnoremap <leader>pp :set paste!<cr>
 nnoremap <leader>nn :set nu! <bar> :set rnu!<CR>
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>

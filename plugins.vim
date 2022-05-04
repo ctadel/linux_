@@ -165,8 +165,8 @@ EOF
     nnoremap <F5> :TermExec cmd="python3 %"<CR>:wincmd j<CR>
 
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
-    
-"COC CONFIGURATIONS 
+
+"COC CONFIGURATIONS
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
           \ <SID>check_back_space() ? "\<TAB>" :
@@ -216,7 +216,7 @@ EOF
 " FZF CONFIGURATIONS
     command! -bang -nargs=? -complete=dir Files
         \ call fzf#vim#files(<q-args>, {'options': ['--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-    
+
     " Hide status line while fzf
     autocmd! FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -244,15 +244,15 @@ EOF
 "---------------------------------------------- STARTIFY ----------------------------------------------"
     let g:startify_padding_left = 3
     let g:startify_custom_header = [
-                \ ' ################################################ ',
-                \ ' ##          __              .___     .__      ## ',
-                \ ' ##    _____/  |______     __| _/____ |  |     ## ',
-                \ ' ##  _/ ___\   __\__  \   / __ |/ __ \|  |     ## ',
-                \ ' ##  \  \___|  |  / __ \_/ /_/ \  ___/|  |__   ## ',
-                \ ' ##   \___  >__| (____  /\____ |\___  >____/   ## ',
-                \ ' ##       \/          \/      \/    \/         ## ',
-                \ ' ##                                            ## ',
-                \ ' ################################################ ',
+                \ ' ################################################',
+                \ ' ##          __              .___     .__      ##',
+                \ ' ##    _____/  |______     __| _/____ |  |     ##',
+                \ ' ##  _/ ___\   __\__  \   / __ |/ __ \|  |     ##',
+                \ ' ##  \  \___|  |  / __ \_/ /_/ \  ___/|  |__   ##',
+                \ ' ##   \___  >__| (____  /\____ |\___  >____/   ##',
+                \ ' ##       \/          \/      \/    \/         ##',
+                \ ' ##                                            ##',
+                \ ' ################################################',
                 \ ]
 
 
