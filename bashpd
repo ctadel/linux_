@@ -59,7 +59,7 @@ fi
 
 # Directory settings
 alias ..='cd ..'
-alias lss='ls -ltrah'
+alias l='ls -ltrah'
 
 dotSlash=""
 for i in 1 2 3 4

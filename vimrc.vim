@@ -82,6 +82,7 @@ if has('nvim')
         Plug 'alvan/vim-closetag'
         Plug 'folke/persistence.nvim'
         Plug 'ntpeters/vim-better-whitespace'
+        Plug 'github/copilot.vim'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim
@@ -107,10 +108,8 @@ endif
 
 "---------------------------------------------FILE TYPE CONFIG------------------------------------------------"
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
-autocmd FileType css setlocal shiftwidth=4 tabstop=4
-autocmd FileType vim setlocal shiftwidth=4 tabstop=4
-autocmd FileType conf setlocal shiftwidth=4 tabstop=4
+autocmd FileType js setlocal shiftwidth=2 tabstop=2
+autocmd FileType jsx setlocal shiftwidth=2 tabstop=2
 
 "--------------------------------------------------FUNCTIONS--------------------------------------------------"
 "Function to Clear History traces or in simple words deletes undo files
@@ -248,4 +247,4 @@ let g:airline_section_y = ''
 au User AirlineAfterInit  :let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%', 'maxlinenr', ' :%3v'])
 
 "HTML Autoclose
-let g:closetag_filenames = '*.js,*.html,*.xhtml,*.phtml'
+let g:closetag_filenames = '*.js,*.jsx,*.html,*.xhtml,*.phtml'
