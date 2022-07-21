@@ -90,6 +90,7 @@ if has('nvim')
         "No plugin file to source :(
     endtry
     nnoremap <silent><C-w>     :bdelete<CR>
+    nnoremap <silent><C-Space>     :Buffers<CR>
 else
     nnoremap <silent><C-w>     :bdelete<CR>
     nnoremap <silent><C-l>     :noh<CR>
