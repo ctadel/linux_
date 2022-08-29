@@ -13,10 +13,6 @@ lua<<EOF
       open_on_tab         = true,
       hijack_cursor       = true,
       update_cwd          = true,
-      update_to_buf_dir   = {
-        enable = false,
-        auto_open = true,
-      },
       diagnostics = {
         enable = false,
         icons = {
@@ -107,8 +103,6 @@ EOF
             right_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
             left_mouse_command = "buffer %d",    -- can be a string | function, see "Mouse actions"
             middle_mouse_command = nil,          -- can be a string | function, see "Mouse actions"
-
-            indicator_icon = '▎',
             buffer_close_icon = '',
             modified_icon = '●',
             close_icon = '',
@@ -156,7 +150,7 @@ EOF
 
 "TOGGLE TERM
     autocmd TermEnter term://*toggleterm#*
-          \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+        \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
     nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
@@ -165,49 +159,74 @@ EOF
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
 
 "COC CONFIGURATIONS
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    function! s:check_back_space() abort
+    inoremap <silent><expr> <TAB>
+          \ coc#pum#visible() ? coc#pum#next(1):
+          \ CheckBackspace() ? "\<Tab>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+    " Make <CR> to accept selected completion item or notify coc.nvim to format
+    " <C-g>u breaks current undo, please make your own choice.
+    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+    function! CheckBackspace() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
 
     " Use <c-space> to trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
-    " Use <cr> to confirm completion
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    if has('nvim')
+      inoremap <silent><expr> <c-space> coc#refresh()
+    else
+      inoremap <silent><expr> <c-@> coc#refresh()
+    endif
 
-    " Remap keys for gotos
+    " Use `[g` and `]g` to navigate diagnostics
+    " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+    " GoTo code navigation.
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
 
-    " Use K to show documentation in preview window
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " Use K to show documentation in preview window.
+    nnoremap <silent> K :call ShowDocumentation()<CR>
 
-    function! s:show_documentation()
-      if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
+    function! ShowDocumentation()
+      if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
       else
-        call CocAction('doHover')
+        call feedkeys('K', 'in')
       endif
     endfunction
 
-    " Highlight symbol under cursor on CursorHold
+    " Highlight the symbol and its references when holding the cursor.
     autocmd CursorHold * silent call CocActionAsync('highlight')
 
-    " Remap for rename current word
+    " Symbol renaming.
     nmap <leader>rn <Plug>(coc-rename)
 
+    " Formatting selected code.
+    xmap <leader>f  <Plug>(coc-format-selected)
+    nmap <leader>f  <Plug>(coc-format-selected)
+
+    augroup mygroup
+      autocmd!
+      " Setup formatexpr specified filetype(s).
+      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+      " Update signature help on jump placeholder.
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
+
     " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-    nmap <silent> <TAB> <Plug>(coc-range-select)
-    xmap <silent> <TAB> <Plug>(coc-range-select)
-    xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+    "nmap <silent> <TAB> <Plug>(coc-range-select)
+    "xmap <silent> <TAB> <Plug>(coc-range-select)
+    "xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 "---------------------------------------------- FUZZY FILE FINDER ----------------------------------------------"
 
