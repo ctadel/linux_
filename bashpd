@@ -246,3 +246,4 @@ if [ -f $HOME/.server_settings ]; then
     . $HOME/.server_settings
 fi
 
+alias notify="notify-send 'Process Completed' 'Please have a look in the terminal' -u 'normal' && /home/prajwal/.local/bin/alert"

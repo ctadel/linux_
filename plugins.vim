@@ -149,12 +149,15 @@ EOF
 "-------------------------------------------------- TOGGLE-TERM --------------------------------------------------"
 
 "TOGGLE TERM
+lua<<EOF
+require("toggleterm").setup{}
+EOF
     autocmd TermEnter term://*toggleterm#*
         \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
     nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
-    nnoremap <F5> :TermExec cmd="python3 %"<CR>:wincmd j<CR>
+    nnoremap <F5> :TermExec cmd="python3 %"<CR>
 
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
 
