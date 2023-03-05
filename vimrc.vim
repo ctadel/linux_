@@ -82,7 +82,6 @@ if has('nvim')
         Plug 'alvan/vim-closetag'
         Plug 'folke/persistence.nvim'
         Plug 'ntpeters/vim-better-whitespace'
-        Plug 'github/copilot.vim'
     call plug#end()
     try
         source ~/gitlib/linux_/plugins.vim

@@ -17,4 +17,6 @@ select case when inet_server_addr()='127.0.0.1' or inet_server_addr() is null th
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
 
+/*
 \conninfo
+*/

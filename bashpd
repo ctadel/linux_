@@ -84,6 +84,8 @@ function fn (){
    eval $CMD
 }
 
+alias kill9='kill -9 %'
+
 #Python
 alias pym='python manage.py'
 alias pymr='python manage.py runserver 0.0.0.0:8000'
@@ -104,6 +106,7 @@ alias gdc='git diff --cached'
 alias gg='git grep'
 alias gb='git branch'
 alias gsl='git stash list'
+alias gw='git worktree'
 
 #QuickSave Imlementation
 alias quicksee='git stash show $(git stash list | grep "__QuickSave__" | cut -d: -f1)'
@@ -227,6 +230,10 @@ if [ -f  /usr/bin/nvim ]; then
   alias vi='nvim'
 fi
 
+if [ -f  /usr/bin/lvim ]; then
+  alias vi='nvim'
+fi
+
 if [ -f  /usr/bin/fzf ]; then
   alias f='fzf -f'
 fi
@@ -236,14 +243,32 @@ if [ -f /usr/bin/xsel ] || [ -f ~/usr/bin/xsel ]; then
 fi
 
 if [ -f  /usr/bin/psql ]; then
-    alias psql="psql -Uctadel -dtradeindia --set PROMPT1='%[%033[0;34m%]%(LOCAL) %[%033[0m%]%/%R%# '"
+    alias psql="psql --set PROMPT1='%[%033[0;34m%]%(LOCAL) %[%033[0m%]%/%R%# '"
     alias tipsql="psql -h192.168.1.208 -dtradein_clients -Utradein  --set PROMPT1='%[%033[0;36m%]%(LOCAL) %[%033[0m%]%/%R%# '"
     alias rpsql="psql -h34.93.71.99 -dtradein_clients -Utradein_dev --set PROMPT1='%[%033[0;31m%]%(REMOTE) %[%033[0m%]%/%R%# '"
 fi
-
 # include .server_settings if it exists
 if [ -f $HOME/.server_settings ]; then
     . $HOME/.server_settings
 fi
 
 alias notify="notify-send 'Process Completed' 'Please have a look in the terminal' -u 'normal' && /home/prajwal/.local/bin/alert"
+
+################# ZSHRC ###############
+
+# Plugins currently using
+#plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker)
+
+bindkey '^ ' autosuggest-accept
+
+# Edit line in vim with ctrl-backspace:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '' edit-command-line
+
+bindkey '' backward-kill-word
+bindkey '<C-Del>' kill-word
+
+bindkey "" backward-word
+
+export EDITOR="lvim"
+export VISUAL="lvim"
