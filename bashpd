@@ -258,12 +258,19 @@ alias notify="notify-send 'Process Completed' 'Please have a look in the termina
 function got() {
     # Handle flags
     local new_branch=false
-    local migration=false
+    local migrate=false
     local branch_name=""
     while [ $# -gt 0 ]; do
       case $1 in
         --new|-n)
           new_branch=true
+          ;;
+        --migrate|-m)
+          migrate=true
+          ;;
+        -nm|-mn)
+          new_branch=true
+          migrate=true
           ;;
         *)
           branch_name="$1"
@@ -309,8 +316,23 @@ function got() {
             fi
         fi
 
+        # Move changes to new branch directory if --migrate flag is provided
+        if [[ -n "$branch_name" ]]; then
+          if [[ "$migrate" == true ]]; then
+              # Check if there are any changes to stash
+              zip -qo changes.zip $(gs -s | awk 'ORS=" " {print $2}')
+              mv changes.zip $branch_dir
+          else
+            $migrate = false
+          fi
+        fi
+
         # Change to branch directory
         cd "$branch_dir"
+        if [[ "$migrate" == true ]]; then
+          unzip -qo changes.zip
+          rm changes.zip
+        fi
 
     else
         # No branch name argument provided, list worktrees
