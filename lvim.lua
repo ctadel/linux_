@@ -138,7 +138,21 @@ lvim.plugins = {
     config = function()
       require('neoclip').setup()
     end,
+
+  {
+    "jackMort/ChatGPT.nvim",
+      config = function()
+        require("chatgpt").setup({
+          -- optional configuration
+        })
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      }
   }
+}
 
 
 require("telescope").load_extension "file_browser"
