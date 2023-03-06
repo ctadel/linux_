@@ -231,7 +231,7 @@ if [ -f  /usr/bin/nvim ]; then
 fi
 
 if [ -f  /usr/bin/lvim ]; then
-  alias vi='nvim'
+  alias vi='lvim'
 fi
 
 if [ -f  /usr/bin/fzf ]; then
