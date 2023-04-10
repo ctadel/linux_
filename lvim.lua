@@ -111,9 +111,10 @@ lvim.plugins = {
       event = "BufRead",
       config = function()
         vim.cmd "highlight default link gitblame SpecialComment"
-        vim.g.gitblame_enabled = 0
+        vim.g.gitblame_enabled = 1
         vim.g.gitblame_date_format = '%r'
         vim.g.gitblame_message_when_not_committed = 'Oh shit! gotta commit this now...'
+        vim.g.gitblame_delay = 300
       end,
     },
     {
