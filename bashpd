@@ -250,8 +250,8 @@ if [ -f  /home/prajwal/.local/bin/lvim ]; then
   alias vi='lvim'
 fi
 
-if [ -f  /usr/bin/fzf ]; then
-  alias f='fzf -f'
+if [ -f /usr/bin/fzf ] && [ -f $HOME/usr/f ]; then
+  alias f='${HOME}/usr/f'
 fi
 
 if [ -f /usr/bin/xsel ] || [ -f ~/usr/bin/xsel ]; then

@@ -59,6 +59,25 @@ if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
         fi
     fi
 
+    if [ -x "$(command -v lvim)" ]; then
+        make_link 'lvim.lua' '~/.config/lvim/config.lua'
+        if [ $? == 0 ];then
+            echo -e "\t\e[6;32m\u2714\e[0m Lunarvim configurations "
+        else
+            echo -e "\t\e[6;31m\u274c\e[0m Lunarvim configurations "
+        fi
+    fi
+
+    if [ -x "$(command -v fzf)" ]; then
+      unalias f
+      make_link 'fzf_script.sh' "${HOME}/usr/f"
+        if [ $? == 0 ];then
+            echo -e "\t\e[6;32m\u2714\e[0m Fzf script added to ${HOME}/usr/f "
+        else
+            echo -e "\t\e[6;31m\u274c\e[0m Error in linking fzf script (maybe use sudo)"
+        fi
+    fi
+
     if [ -x "$(command -v byobu)" ]; then
         make_link 'byoburc' '~/.byobu/status'
         if [ $? == 0 ];then
