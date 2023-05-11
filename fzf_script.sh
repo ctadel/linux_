@@ -23,7 +23,7 @@ function browse_modified_files_in_vim() {
 
 # Define function to add files with git and fzf
 function git_add_files() {
-  git status --porcelain | awk '{print $2}' | fzf --multi --preview 'git diff --color=always {}' --preview-window right:50% | xargs git add --
+  git ls-files --modified --exclude-standard | fzf --multi --preview 'git diff --color=always {}' --preview-window right:50% | xargs git add --
 }
 
 function copy_files() {
