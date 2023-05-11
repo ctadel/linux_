@@ -119,7 +119,7 @@ alias 'grl'='git reflog'
 alias 'gcp'='git cherry-pick'
 alias 'gw'='git worktree'
 alias 'gr'='git reset'
-alias 'grh'='git reset HEAD .'
+alias 'grh'='git reset HEAD'
 alias 'gxf'='git clean -f'
 alias 'ggpull'='git pull origin $(git_current_branch)'
 alias 'ggpush'='git push origin $(git_current_branch)'
@@ -246,7 +246,7 @@ if [ -f  /usr/bin/nvim ]; then
   alias vi='nvim'
 fi
 
-if [ -f  /usr/bin/lvim ]; then
+if [ -f  /home/prajwal/.local/bin/lvim ]; then
   alias vi='lvim'
 fi
 
