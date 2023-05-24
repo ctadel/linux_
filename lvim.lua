@@ -117,42 +117,14 @@ lvim.plugins = {
         vim.g.gitblame_delay = 300
       end,
     },
-    {
-      "folke/persistence.nvim",
-        event = "BufReadPre", -- this will only start session saving when an actual file was opened
-        module = "persistence",
-        config = function()
-          require("persistence").setup {
-            dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
-            options = { "buffers", "curdir", "tabpages", "winsize" },
-          }
-      end,
-  },
   {"theHamsta/nvim-dap-virtual-text"},
   {"ntpeters/vim-better-whitespace"},
-  {
-    "AckslD/nvim-neoclip.lua"},
-    requires = {
-      {'kkharji/sqlite.lua', module = 'sqlite'},
-      {'nvim-telescope/telescope.nvim'},
-    },
-    config = function()
-      require('neoclip').setup()
-    end,
-
-  {
-    "jackMort/ChatGPT.nvim",
-      config = function()
-        require("chatgpt").setup({
-          -- optional configuration
-        })
-      end,
-      requires = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
-      }
-  }
+  {"AckslD/nvim-neoclip.lua"},
+  "ChristianChiarulli/swenv.nvim",
+  "stevearc/dressing.nvim",
+  "mfussenegger/nvim-dap-python",
+  "nvim-neotest/neotest",
+  "nvim-neotest/neotest-python",
 }
 
 
@@ -160,22 +132,39 @@ require("telescope").load_extension "file_browser"
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-    ["<C-Space>"] = actions.close,
-    [""] = actions.close,
+lvim.builtin.telescope.defaults={
+  mappings = {
+    -- for input mode
+    i = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+      ["<C-n>"] = actions.cycle_history_next,
+      ["<C-p>"] = actions.cycle_history_prev,
+      ["<C-Space>"] = actions.close,
+      [""] = actions.close,
+    },
+    -- for normal mode
+    n = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+    },
   },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
+  file_ignore_patterns = {"*.pyc"},
+  layout_strategy = "horizontal",
+  sorting_strategy = "descending",
+  layout_config = {
+    -- mirror=true,
+    width = 0.8, -- Adjust the width value as needed
+    height = 0.8, -- Adjust the height value as needed
+    preview_cutoff = 40, -- Adjust the preview cutoff value as needed
+    horizontal = {
+      width_padding = 0.3, -- Adjust the width padding value as needed
+      height_padding = 0.2, -- Adjust the height padding value as needed
+      preview_width = 0.6, -- Adjust the preview width value as needed
+    },
   },
 }
+lvim.builtin.telescope.theme='ivy'
 
 
 vim.api.nvim_set_keymap( "n", "<C-Space>", ":lua require'telescope'.extensions.file_browser.file_browser({depth=false})<CR>", { noremap = true })
@@ -227,3 +216,47 @@ end
 
 lvim.keys.normal_mode["<F5>"] = "<Esc>:lua run_current_file()<CR>"
 
+-- setup debug adapter
+lvim.builtin.dap.active = true
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+pcall(function()
+  require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python")
+end)
+
+-- automatically install python syntax highlighting
+lvim.builtin.treesitter.ensure_installed = {
+  "python",
+}
+
+-- setup testing
+require("neotest").setup({
+  adapters = {
+    require("neotest-python")({
+      -- Extra arguments for nvim-dap configuration
+      -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
+      dap = {
+        justMyCode = false,
+        console = "integratedTerminal",
+      },
+      args = { "--log-level", "DEBUG", "--quiet" },
+      runner = "pytest",
+    })
+  }
+})
+
+lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('neotest').run.run()<cr>",
+  "Test Method" }
+lvim.builtin.which_key.mappings["dM"] = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>",
+  "Test Method DAP" }
+lvim.builtin.which_key.mappings["df"] = {
+  "<cmd>lua require('neotest').run.run({vim.fn.expand('%')})<cr>", "Test Class" }
+lvim.builtin.which_key.mappings["dF"] = {
+  "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test Class DAP" }
+lvim.builtin.which_key.mappings["dS"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" }
+
+
+-- binding for switching
+lvim.builtin.which_key.mappings["C"] = {
+  name = "Python",
+  c = { "<cmd>lua require('swenv.api').pick_venv()<cr>", "Choose Env" },
+}
