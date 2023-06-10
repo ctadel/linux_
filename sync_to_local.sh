@@ -68,6 +68,16 @@ if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
         fi
     fi
 
+    if [ -x "$(command -v lf)" ]; then
+        make_link 'lfrc' '~/.config/lf/lfrc'
+        if [ $? == 0 ];then
+            echo -e "\t\e[6;32m\u2714\e[0m LF configurations "
+        else
+            echo -e "\t\e[6;31m\u274c\e[0m LF configurations "
+        fi
+    fi
+
+
     if [ -x "$(command -v fzf)" ]; then
       unalias f
       make_link 'fzf_script.sh' "${HOME}/usr/f"

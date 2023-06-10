@@ -1,0 +1,45 @@
+# Basic Settings
+set preview true
+# set hidden true
+# set drawbox true
+set icons true
+set ignorecase true
+
+# Custom Functions
+cmd trigger ${{
+    case $(file --mime-type "$f" -bL) in
+        text/*|application/json) $EDITOR "$f";;
+        inode/directory) echo -n "$f" | xsel -b ;;
+        *) xdg-open "$f" ;;
+    esac
+}}
+
+# Bindings
+# Remove some defaults
+map m
+map n
+map o
+map "'"
+map '"'
+map d
+map c
+map e
+map f
+
+# Basic Functions
+map . set hidden!
+map DD delete
+map p paste
+map x cut
+map y copy
+map <enter> trigger
+map r rename
+map n search-next
+map N search-prev
+map R reload
+map C clear
+
+# Directory Mapping
+map gd cd ~/Downloads
+map gD cd ~/Desktop
+map gp cd ~/Downloads/pwc
