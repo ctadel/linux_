@@ -15,7 +15,7 @@ function browse_files_in_vim() {
 
 # Define function to browse only modified files in Vim with fzf
 function browse_modified_files_in_vim() {
-  local files=$(git status --porcelain | awk '{print $2}' | fzf --multi --preview 'git diff --color=always {}' --preview-window 'right:60%')
+  local files=$(git status --short | awk '/^UU|AA/ {print $2}' | fzf --multi --preview 'git diff --color=always {}' --preview-window 'right:60%')
   if [ -n "$files" ]; then
     lvim $files
   fi
@@ -42,5 +42,8 @@ elif [ "$1" = "ga" ]; then
 elif [ "$1" = "cp" ]; then
   copy_files
 else
-  echo "Invalid argument. Please specify one of: go(git checkout), ga(git add), vi(browse files)"
+  files=$(fzf --multi --preview-window 'right:60%')
+  if [ -n "$files" ]; then
+    lvim $files
+  fi
 fi

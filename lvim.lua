@@ -254,6 +254,8 @@ lvim.builtin.which_key.mappings["dF"] = {
   "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test Class DAP" }
 lvim.builtin.which_key.mappings["dS"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" }
 
+lvim.builtin.which_key.mappings["dT"] = { "O__import__('pdb').set_trace()<esc>j0w<cmd>lua require'dap'.toggle_breakpoint()<cr>",
+  "Add a legacy breakpoint" }
 
 -- binding for switching
 lvim.builtin.which_key.mappings["C"] = {
