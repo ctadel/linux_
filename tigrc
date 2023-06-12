@@ -1,12 +1,13 @@
 # MAIN
 bind main I :toggle show-id
 
-# View bindings
-bind generic	<C-g>	view-grep
+# Unbinding stuffs
 bind generic g none
 bind generic G none
 
 # Cursor navigation
+
+bind generic	<C-g>	view-grep
 bind generic	j	move-down
 bind generic	k	move-up
 bind generic	}	move-half-page-down
@@ -17,8 +18,16 @@ bind generic	gg	move-first-line
 bind generic	G	move-last-line
 bind main	G	move-last-line
 
+# Hack to move to next commit in log view
 bind log } :/Author:
 bind log { :find-prev
 
-# Bind to copy commit ID
+
+
+# Copy bind
+
+# commit id under the cursor
 bind generic Y @sh -c "echo -n %(commit) | xclip -selection c"
+
+# file under the cursor
+bind status Y @sh -c "echo -n %(file) | xclip -selection c"
