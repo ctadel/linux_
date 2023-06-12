@@ -1,18 +1,22 @@
 # Basic Settings
-set preview true
-# set hidden true
-# set drawbox true
 set icons true
 set ignorecase true
+
+set previewer '~/.config/lf/preview'
+set cleaner '~/.config/lf/cleaner'
+
 
 # Custom Functions
 cmd trigger ${{
     case $(file --mime-type "$f" -bL) in
         text/*|application/json) $EDITOR "$f";;
-        inode/directory) echo -n "$f" | xsel -b ;;
+        inode/directory)
+          echo "$f">"$LF_UPDATE_DIRECTORY"
+          pkill lf ;;
         *) xdg-open "$f" ;;
     esac
 }}
+
 
 # Bindings
 # Remove some defaults
@@ -38,8 +42,9 @@ map n search-next
 map N search-prev
 map R reload
 map C clear
+map Y $printf "%s" "$fx" | xclip -selection clipboard
 
 # Directory Mapping
-map gd cd ~/Downloads
-map gD cd ~/Desktop
+map gd cd ~/Desktop
+map gD cd ~/Downloads
 map gp cd ~/Downloads/pwc

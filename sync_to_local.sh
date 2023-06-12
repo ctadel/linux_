@@ -77,6 +77,14 @@ if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]];then
         fi
     fi
 
+    if [ -x "$(command -v tig)" ]; then
+        make_link 'tigrc' '~/.tigrc'
+        if [ $? == 0 ];then
+            echo -e "\t\e[6;32m\u2714\e[0m Tig configurations "
+        else
+            echo -e "\t\e[6;31m\u274c\e[0m Tig configurations "
+        fi
+    fi
 
     if [ -x "$(command -v fzf)" ]; then
       unalias f

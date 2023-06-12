@@ -124,6 +124,14 @@ alias 'gxf'='git clean -f'
 alias 'ggpull'='git pull origin $(git_current_branch)'
 alias 'ggpush'='git push origin $(git_current_branch)'
 
+
+# TIG Shortcuts
+if [ -x "$(command -v tig)" ]; then
+  alias gs='tig status'
+  alias gl='tig'
+  alias gsl='tig stash'
+fi
+
 #QuickSave Imlementation
 alias quicksee='git stash show $(git stash list | grep "__QuickSave__" | cut -d: -f1)'
 
@@ -247,7 +255,7 @@ if [ -f  /usr/bin/nvim ]; then
 fi
 
 if [ -f  /home/prajwal/.local/bin/lvim ]; then
-  alias vi='lvim'
+  alias vi='/home/prajwal/.local/bin/lvim'
 fi
 
 if [ -f /usr/bin/fzf ] && [ -f $HOME/usr/f ]; then
@@ -381,4 +389,29 @@ if [[ $(ps -p $$ | awk '{print $4}' | tail -n 1) == "zsh" ]]; then
 
   export EDITOR="lvim"
   export VISUAL="lvim"
+fi
+
+
+################# LF #################
+
+# this is the wrapper function to the lf to support of change directory
+# after enter key is pressed
+lfcd() {
+  tmp="$(mktemp)"
+  export LF_UPDATE_DIRECTORY=$tmp
+
+  command lf "$@"
+
+  last_directory=$(<"$tmp")
+  if [[ -d "$last_directory" && "$last_directory" != "$(pwd)" ]]; then
+      cd "$last_directory"
+  fi
+
+  rm "$tmp"
+}
+
+alias lf="lfcd"
+
+if [ -f $HOME/.config/lf/lficons.sh ]; then
+    . $HOME/.config/lf/lficons.sh
 fi
