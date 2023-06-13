@@ -127,8 +127,9 @@ alias 'ggpush'='git push origin $(git_current_branch)'
 
 # TIG Shortcuts
 if [ -x "$(command -v tig)" ]; then
-  alias gs='tig status'
   alias gl='tig'
+  alias gs='tig status'
+  alias gb='tig refs'
   alias gsl='tig stash'
 fi
 

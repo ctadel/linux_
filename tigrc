@@ -1,12 +1,16 @@
-# MAIN
-bind main I :toggle show-id
+# some basic config
+set main-view-date-display = relative
+set main-view-id-display = yes
+set refs-view-date-display = relative
+set refs-view-id-display = yes
+
 
 # Unbinding stuffs
 bind generic g none
 bind generic G none
 
-# Cursor navigation
 
+# Cursor navigation
 bind generic	<C-g>	view-grep
 bind generic	j	move-down
 bind generic	k	move-up
@@ -17,6 +21,7 @@ bind generic	[	move-page-up
 bind generic	gg	move-first-line
 bind generic	G	move-last-line
 bind main	G	move-last-line
+
 
 # Hack to move to next commit in log view
 bind log } :/Author:
