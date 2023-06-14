@@ -5,6 +5,11 @@ set refs-view-date-display = relative
 set refs-view-id-display = yes
 
 
+# COLORS
+# color cursor        white	blue	bold
+color stat-staged   green default bold
+color stat-unstaged red default bold
+
 # Unbinding stuffs
 bind generic g none
 bind generic G none
@@ -28,11 +33,11 @@ bind log } :/Author:
 bind log { :find-prev
 
 
-
 # Copy bind
-
 # commit id under the cursor
 bind generic Y @sh -c "echo -n %(commit) | xclip -selection c"
-
 # file under the cursor
 bind status Y @sh -c "echo -n %(file) | xclip -selection c"
+
+#Misc Binds
+bind refs M <?git merge %(branch)

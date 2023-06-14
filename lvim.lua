@@ -82,7 +82,7 @@ lvim.keys.normal_mode['  d'] = ":wincmd l<CR>"
 lvim.keys.normal_mode['  w'] = ":wincmd k<CR>"
 lvim.keys.normal_mode['  s'] = ":wincmd j<CR>"
 
-lvim.keys.normal_mode['q:'] = ":q"
+lvim.keys.normal_mode['q:'] = ""
 
 
 -- Commenting codeblocks
