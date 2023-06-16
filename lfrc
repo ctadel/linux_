@@ -3,7 +3,7 @@ set icons true
 set ignorecase true
 
 set previewer '~/.config/lf/preview'
-set cleaner '~/.config/lf/cleaner'
+# set cleaner '~/.config/lf/cleaner'
 
 
 # Custom Functions
@@ -47,4 +47,5 @@ map Y $printf "%s" "$fx" | xclip -selection clipboard
 # Directory Mapping
 map gd cd ~/Desktop
 map gD cd ~/Downloads
+map gl cd ~/gitlib
 map gp cd ~/Downloads/pwc
