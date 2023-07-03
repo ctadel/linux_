@@ -17,6 +17,8 @@ COLORTERM="truecolor"
 export PAGER=more
 export EDITOR=vi
 
+declare -A repository_map
+
 function extract {
  if [ -z "$1" ]; then
     # display usage if no parameters given
@@ -233,6 +235,8 @@ function bar(){
 
 alias pubip='curl ifconfig.co'
 
+alias lo='libreoffice'
+
 if [ -d ~/gitlib/linux_ ]; then 
     alias lin_="cd ~/gitlib/linux_"
     export LIN_="/home/$USER/gitlib/linux_"
@@ -396,7 +400,7 @@ fi
 ################# LF #################
 
 # this is the wrapper function to the lf to support of change directory
-# after enter key is pressed
+# only cd's if enter key is pressed
 lfcd() {
   tmp="$(mktemp)"
   export LF_UPDATE_DIRECTORY=$tmp
@@ -416,3 +420,51 @@ alias lf="lfcd"
 if [ -f $HOME/.config/lf/lficons.sh ]; then
     . $HOME/.config/lf/lficons.sh
 fi
+
+
+################ DEACTIVATE ALL ENVS ################
+deactivate_all_envs() {
+  if [[ ! -z "$PYENV_VERSION" ]]; then
+    pyenv deactivate
+  fi
+
+  if [[ ! -z "$CONDA_PREFIX" ]]; then
+    while [[ ! -z "$CONDA_PREFIX" ]]; do
+      conda deactivate
+    done
+  fi
+
+  if [[ ! -z "$VIRTUAL_ENV" ]]; then
+    deactivate
+  fi
+}
+
+
+
+############### Feature Branches ##############
+function features(){
+    if [[ -z "$1" ]]; then
+        repo=$(basename "$(git rev-parse --show-toplevel)" 2>/dev/null)
+        if [[ -z $repo ]]; then
+            repo='all'
+        fi
+    else
+      repo=$1
+    fi
+
+    if [[ $repo == 'all' ]]; then
+        compgen -v | grep -E '^FB_' | while read -r var; do
+            eval echo $"$var"
+            echo "\n\n"
+        done
+        return
+    fi
+
+    repo_varname="FB_${repository_map["$repo"]:=$repo}"
+
+    if [ -v $repo_varname ]; then
+        eval echo $"$repo_varname"
+    else
+        echo "Variable FB_$repo is not defined"
+    fi
+  }
