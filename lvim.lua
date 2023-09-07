@@ -11,11 +11,12 @@ lvim.leader = "space"
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
 lvim.colorscheme = "lunar"
-lvim.lsp.diagnostics.virtual_text = false
+vim.diagnostic.config({ virtual_text = false })
 
 --basic settings
 vim.opt.backup = false -- creates a backup file
-vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+-- vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+vim.opt.clipboard = "unnamed"
 vim.opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
 vim.opt.colorcolumn = "99999" -- fixes indentline for now
 vim.opt.completeopt = { "menuone", "noselect" }
@@ -60,12 +61,15 @@ lvim.keys.normal_mode["<C-w>"] = ":bd<cr>"
 lvim.keys.insert_mode[""] = "<C-w>"
 
 lvim.keys.command_mode["jk"] = "<C-c>"
+lvim.keys.command_mode["JK"] = "<C-c>"
 lvim.keys.normal_mode["<C-l>"] = ":noh<cr>"
 lvim.keys.normal_mode["j"] = "gj"
 lvim.keys.normal_mode["k"] = "gk"
 
 lvim.keys.normal_mode["n"] = "nzz"
 lvim.keys.normal_mode["N"] = "Nzz"
+
+lvim.keys.visual_mode['Y'] = '"+y'
 
 -- Move the selected lines up/down with J and K respectively.
 lvim.keys.visual_mode["J"] = ":m '>+1<CR>gv=gv"
@@ -82,7 +86,7 @@ lvim.keys.normal_mode['  d'] = ":wincmd l<CR>"
 lvim.keys.normal_mode['  w'] = ":wincmd k<CR>"
 lvim.keys.normal_mode['  s'] = ":wincmd j<CR>"
 
-lvim.keys.normal_mode['q:'] = ""
+-- lvim.keys.normal_mode['q:'] = ""
 
 
 -- Commenting codeblocks
@@ -115,7 +119,7 @@ lvim.plugins = {
         vim.cmd "highlight default link gitblame SpecialComment"
         vim.g.gitblame_enabled = 1
         vim.g.gitblame_date_format = '%r'
-        vim.g.gitblame_message_when_not_committed = 'Oh shit! gotta commit this now...'
+        vim.g.gitblame_message_when_not_committed = 'oh man! gotta commit this asap...'
         vim.g.gitblame_delay = 300
       end,
     },
@@ -191,6 +195,7 @@ end
 
 lvim.keys.insert_mode["<Esc>"] = "<Esc>:lua is_at_end()<CR>"
 lvim.keys.insert_mode["jk"] = "<Esc>:lua is_at_end()<CR>"
+lvim.keys.insert_mode["JK"] = "<Esc>:lua is_at_end()<CR>"
 
 
 -- Function to execute the current file in the buffer based on the file type
@@ -256,7 +261,7 @@ lvim.builtin.which_key.mappings["dF"] = {
   "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test Class DAP" }
 lvim.builtin.which_key.mappings["dS"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" }
 
-lvim.builtin.which_key.mappings["dT"] = { "O__import__('pdb').set_trace()<esc>j0w<cmd>lua require'dap'.toggle_breakpoint()<cr>",
+lvim.builtin.which_key.mappings["dT"] = { "O__import__('ipdb').set_trace()<esc>j0w<cmd>lua require'dap'.toggle_breakpoint()<cr>",
   "Add a legacy breakpoint" }
 
 -- binding for switching

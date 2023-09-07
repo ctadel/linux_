@@ -8,9 +8,6 @@ lua<<EOF
     require'nvim-tree'.setup {
       disable_netrw       = false,
       hijack_netrw        = true,
-      open_on_setup       = false,
-      ignore_ft_on_setup  = {},
-      open_on_tab         = true,
       hijack_cursor       = true,
       update_cwd          = true,
       diagnostics = {
@@ -160,75 +157,75 @@ EOF
 
 "---------------------------------------------- CONQUER OF COMPLETION ----------------------------------------------"
 
-"COC CONFIGURATIONS
+" "COC CONFIGURATIONS
 
-    inoremap <silent><expr> <TAB>
-          \ coc#pum#visible() ? coc#pum#next(1):
-          \ CheckBackspace() ? "\<Tab>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"     inoremap <silent><expr> <TAB>
+"           \ coc#pum#visible() ? coc#pum#next(1):
+"           \ CheckBackspace() ? "\<Tab>" :
+"           \ coc#refresh()
+"     inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-    " Make <CR> to accept selected completion item or notify coc.nvim to format
-    " <C-g>u breaks current undo, please make your own choice.
-    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"     " Make <CR> to accept selected completion item or notify coc.nvim to format
+"     " <C-g>u breaks current undo, please make your own choice.
+"     inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                                   \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-    function! CheckBackspace() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+"     function! CheckBackspace() abort
+"       let col = col('.') - 1
+"       return !col || getline('.')[col - 1]  =~# '\s'
+"     endfunction
 
-    " Use <c-space> to trigger completion.
-    if has('nvim')
-      inoremap <silent><expr> <c-space> coc#refresh()
-    else
-      inoremap <silent><expr> <c-@> coc#refresh()
-    endif
+"     " Use <c-space> to trigger completion.
+"     if has('nvim')
+"       inoremap <silent><expr> <c-space> coc#refresh()
+"     else
+"       inoremap <silent><expr> <c-@> coc#refresh()
+"     endif
 
-    " Use `[g` and `]g` to navigate diagnostics
-    " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-    nmap <silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"     " Use `[g` and `]g` to navigate diagnostics
+"     " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+"     nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"     nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-    " GoTo code navigation.
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
+"     " GoTo code navigation.
+"     nmap <silent> gd <Plug>(coc-definition)
+"     nmap <silent> gy <Plug>(coc-type-definition)
+"     nmap <silent> gi <Plug>(coc-implementation)
+"     nmap <silent> gr <Plug>(coc-references)
 
-    " Use K to show documentation in preview window.
-    nnoremap <silent> K :call ShowDocumentation()<CR>
+"     " Use K to show documentation in preview window.
+"     nnoremap <silent> K :call ShowDocumentation()<CR>
 
-    function! ShowDocumentation()
-      if CocAction('hasProvider', 'hover')
-        call CocActionAsync('doHover')
-      else
-        call feedkeys('K', 'in')
-      endif
-    endfunction
+"     function! ShowDocumentation()
+"       if CocAction('hasProvider', 'hover')
+"         call CocActionAsync('doHover')
+"       else
+"         call feedkeys('K', 'in')
+"       endif
+"     endfunction
 
-    " Highlight the symbol and its references when holding the cursor.
-    autocmd CursorHold * silent call CocActionAsync('highlight')
+"     " Highlight the symbol and its references when holding the cursor.
+"     autocmd CursorHold * silent call CocActionAsync('highlight')
 
-    " Symbol renaming.
-    nmap <leader>rn <Plug>(coc-rename)
+"     " Symbol renaming.
+"     nmap <leader>rn <Plug>(coc-rename)
 
-    " Formatting selected code.
-    xmap <leader>f  <Plug>(coc-format-selected)
-    nmap <leader>f  <Plug>(coc-format-selected)
+"     " Formatting selected code.
+"     xmap <leader>f  <Plug>(coc-format-selected)
+"     nmap <leader>f  <Plug>(coc-format-selected)
 
-    augroup mygroup
-      autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder.
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    augroup end
+"     augroup mygroup
+"       autocmd!
+"       " Setup formatexpr specified filetype(s).
+"       autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"       " Update signature help on jump placeholder.
+"       autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"     augroup end
 
-    " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-    "nmap <silent> <TAB> <Plug>(coc-range-select)
-    "xmap <silent> <TAB> <Plug>(coc-range-select)
-    "xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+"     " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+"     "nmap <silent> <TAB> <Plug>(coc-range-select)
+"     "xmap <silent> <TAB> <Plug>(coc-range-select)
+"     "xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 "---------------------------------------------- FUZZY FILE FINDER ----------------------------------------------"
 

@@ -455,7 +455,7 @@ function features(){
     if [[ $repo == 'all' ]]; then
         compgen -v | grep -E '^FB_' | while read -r var; do
             eval echo $"$var"
-            echo "\n\n"
+            echo "\n"
         done
         return
     fi
@@ -465,6 +465,6 @@ function features(){
     if [ -v $repo_varname ]; then
         eval echo $"$repo_varname"
     else
-        echo "Variable FB_$repo is not defined"
+        echo "Variable FB_$repo_varname is not defined"
     fi
   }

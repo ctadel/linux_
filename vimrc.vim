@@ -66,7 +66,6 @@ if has('nvim')
     set signcolumn=yes
 
     call plug#begin('~/.config/nvim/autoload')
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'lukas-reineke/indent-blankline.nvim'
         Plug 'vim-airline/vim-airline'
         Plug 'akinsho/toggleterm.nvim'
