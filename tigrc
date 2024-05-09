@@ -13,6 +13,7 @@ color stat-unstaged red default bold
 # Unbinding stuffs
 bind generic g none
 bind generic G none
+bind generic <Esc> :quit
 
 
 # Cursor navigation
@@ -41,3 +42,6 @@ bind status Y @sh -c "echo -n %(file) | xclip -selection c"
 
 #Misc Binds
 bind refs M <?git merge %(branch)
+
+#Delete file bind
+bind status D !@?rm %(file)

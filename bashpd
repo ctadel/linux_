@@ -265,6 +265,7 @@ fi
 
 if [ -f /usr/bin/fzf ] && [ -f $HOME/usr/f ]; then
   alias f='${HOME}/usr/f'
+  alias f='echo -n $(fzf -e) | copy'
 fi
 
 if [ -f /usr/bin/xsel ] || [ -f ~/usr/bin/xsel ]; then
@@ -422,6 +423,18 @@ if [ -f $HOME/.config/lf/lficons.sh ]; then
 fi
 
 
+################# YAZI #################
+function ya() {
+  tmp="$(mktemp)"
+  export YAZI_UPDATE_DIRECTORY=$tmp
+
+	command ~/usr/yazi "$@"
+  last_directory=$(<"$tmp")
+  if [[ -d "$last_directory" && "$last_directory" != "$(pwd)" ]]; then
+      cd "$last_directory"
+  fi
+}
+
 ################ DEACTIVATE ALL ENVS ################
 deactivate_all_envs() {
   if [[ ! -z "$PYENV_VERSION" ]]; then
@@ -468,3 +481,17 @@ function features(){
         echo "Variable FB_$repo_varname is not defined"
     fi
   }
+
+
+
+
+############### Evaluate Math ##############
+function math(){
+    if [ $1 ]; then
+      python -c 'import math; print('$1')'
+    fi
+  }
+
+alias icat="kitty icat"
+clear
+

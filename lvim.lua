@@ -58,13 +58,24 @@ lvim.keys.normal_mode["<C-d>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<C-a>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-w>"] = ":bd<cr>"
 
-lvim.keys.insert_mode[""] = "<C-w>"
+lvim.keys.insert_mode["<C-BS>"] = "<C-w>"
 
 lvim.keys.command_mode["jk"] = "<C-c>"
 lvim.keys.command_mode["JK"] = "<C-c>"
 lvim.keys.normal_mode["<C-l>"] = ":noh<cr>"
 lvim.keys.normal_mode["j"] = "gj"
 lvim.keys.normal_mode["k"] = "gk"
+
+
+vim.api.nvim_exec([[
+  silent! nunmap ]q
+]], false)
+vim.api.nvim_exec([[
+  silent! nunmap [q
+]], false)
+
+lvim.keys.normal_mode["["] = "10k"
+lvim.keys.normal_mode["]"] = "10j"
 
 lvim.keys.normal_mode["n"] = "nzz"
 lvim.keys.normal_mode["N"] = "Nzz"
@@ -119,7 +130,7 @@ lvim.plugins = {
         vim.cmd "highlight default link gitblame SpecialComment"
         vim.g.gitblame_enabled = 1
         vim.g.gitblame_date_format = '%r'
-        vim.g.gitblame_message_when_not_committed = 'oh man! gotta commit this asap...'
+        vim.g.gitblame_message_when_not_committed = '🤷🤷🤷 gotta commit this now...'
         vim.g.gitblame_delay = 300
       end,
     },
@@ -129,8 +140,6 @@ lvim.plugins = {
   "ChristianChiarulli/swenv.nvim",
   "stevearc/dressing.nvim",
   "mfussenegger/nvim-dap-python",
-  "nvim-neotest/neotest",
-  "nvim-neotest/neotest-python",
 }
 
 
@@ -196,6 +205,8 @@ end
 lvim.keys.insert_mode["<Esc>"] = "<Esc>:lua is_at_end()<CR>"
 lvim.keys.insert_mode["jk"] = "<Esc>:lua is_at_end()<CR>"
 lvim.keys.insert_mode["JK"] = "<Esc>:lua is_at_end()<CR>"
+-- lvim.keys.insert_mode["kj"] = "<Esc>:lua is_at_end()<CR>"
+-- lvim.keys.insert_mode["KJ"] = "<Esc>:lua is_at_end()<CR>"
 
 
 -- Function to execute the current file in the buffer based on the file type
@@ -223,11 +234,39 @@ end
 
 lvim.keys.normal_mode["<F5>"] = "<Esc>:lua run_current_file()<CR>"
 
+
+
+function GoTo_DAP_Repl_window()
+  local repetitions = 10  -- Number of times to repeat the commands
+
+  for _ = 1, repetitions do
+    vim.cmd('wincmd j')  -- Move to the window below the current one
+    vim.cmd('wincmd h')  -- Move to the window on the left side
+  end
+  -- vim.cmd('startinsert')
+end
+
+function GoTo_DAP_Code_window()
+  local repetitions = 10  -- Number of times to repeat the commands
+
+  for _ = 1, repetitions do
+    vim.cmd('wincmd k')  -- Move to the window below the current one
+    vim.cmd('wincmd h')  -- Move to the window on the left side
+  end
+end
+
+function DAP_clear_repl_window()
+  GoTo_DAP_Repl_window()
+  vim.api.nvim_feedkeys('aaS.clear\', 'n', true)
+end
+
 -- setup debug adapter
 lvim.builtin.dap.active = true
 local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
 pcall(function()
-  require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python")
+  require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python").configurations({
+    justMyCode = false,
+  })
 end)
 
 -- automatically install python syntax highlighting
@@ -235,34 +274,17 @@ lvim.builtin.treesitter.ensure_installed = {
   "python",
 }
 
--- setup testing
-require("neotest").setup({
-  adapters = {
-    require("neotest-python")({
-      -- Extra arguments for nvim-dap configuration
-      -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
-      dap = {
-        justMyCode = false,
-        console = "integratedTerminal",
-      },
-      args = { "--log-level", "DEBUG", "--quiet" },
-      runner = "pytest",
-    })
-  }
-})
+lvim.keys.normal_mode["B"] = "<cmd>lua require('dap').toggle_breakpoint()<CR>"
+lvim.builtin.which_key.mappings['B'] = {"<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle Breakpoint"}
+lvim.builtin.which_key.mappings['n'] = {"<cmd>lua require('dap').step_over()<CR>", "DAP - Step Over"}
+lvim.builtin.which_key.mappings['u'] = {"<cmd>lua require('dap').step_out()<CR>", "DAP - Step Out"}
+lvim.builtin.which_key.mappings['s'] = {"<cmd>lua require('dap').step_into()<CR>", "DAP - Step Into"}
+lvim.builtin.which_key.mappings['c'] = {"<cmd>lua require('dap').continue()<CR>", "DAP - Continue"}
+lvim.builtin.which_key.mappings['dr'] = {"<cmd>lua GoTo_DAP_Repl_window()<CR>a", "DAP - Jump to Repl window"}
+lvim.builtin.which_key.mappings['dR'] = {'<cmd>lua DAP_clear_repl_window()<CR>', "DAP - Jump to Repl window"}
+lvim.builtin.which_key.mappings['dm'] = {"<cmd>lua GoTo_DAP_Code_window()<CR>", "DAP - Jump to Main window"}
 
-lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('neotest').run.run()<cr>",
-  "Test Method" }
-lvim.builtin.which_key.mappings["dM"] = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>",
-  "Test Method DAP" }
-lvim.builtin.which_key.mappings["df"] = {
-  "<cmd>lua require('neotest').run.run({vim.fn.expand('%')})<cr>", "Test Class" }
-lvim.builtin.which_key.mappings["dF"] = {
-  "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test Class DAP" }
-lvim.builtin.which_key.mappings["dS"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" }
-
-lvim.builtin.which_key.mappings["dT"] = { "O__import__('ipdb').set_trace()<esc>j0w<cmd>lua require'dap'.toggle_breakpoint()<cr>",
-  "Add a legacy breakpoint" }
+lvim.builtin.which_key.mappings["dT"] = { "O__import__('ipdb').set_trace()<esc>j0w<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Add a legacy breakpoint" }
 
 -- binding for switching
 lvim.builtin.which_key.mappings["C"] = {

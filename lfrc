@@ -17,11 +17,23 @@ cmd trigger ${{
     esac
 }}
 
+# Create a directory
+cmd mkdir %{{
+    printf "Make directory: "
+    read ans
+    mkdir $ans
+}}
+
+# Create a file
+cmd touch %{{
+    printf "Create a new file: "
+    read ans
+    touch $ans
+}}
 
 # Bindings
 # Remove some defaults
 map m
-map n
 map o
 map "'"
 map '"'
@@ -35,7 +47,7 @@ map . set hidden!
 map DD delete
 map p paste
 map x cut
-map y copy
+# map y copy
 map <enter> trigger
 map r rename
 map n search-next
@@ -43,6 +55,8 @@ map N search-prev
 map R reload
 map C clear
 map Y $printf "%s" "$fx" | xclip -selection clipboard
+map N mkdir
+map n touch
 
 # Directory Mapping
 map gd cd ~/Desktop
