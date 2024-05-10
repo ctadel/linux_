@@ -288,9 +288,12 @@ class Synchronize:
                 try:
                     _command = shlex.split(module.exec)
 
-                    subprocess.Popen(_command, start_new_session=True)
+                    stdout, stderr = subprocess.Popen(_command, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, start_new_session=True
+                                ).communicate()
+                    output = stdout.decode() + stderr.decode()
                     self.console.description.append(
-                            f'✔ Execution of "{module.exec}" for {module.name}')
+                            f'✔ Output for "{module.exec}" in {module.name}:\n{output.strip()}')
                     module._synced += 1
 
                 except Exception as e:
