@@ -67,12 +67,18 @@ class Schema:
 
 
         if self.launch_file:
-            _absolute_launch_path = path.join(
-                    path.expanduser('~/.local/share/applications/'),
-                    self.launch_file
-                )
-            # self.files[path.join(self.local_path, self.launch_file)] = _absolute_launch_path
-            self.launch_file = _absolute_launch_path
+            _relative_path = os.path.relpath(path.join(self.local_path, self.launch_file))
+            assert path.exists(_relative_path), \
+                    f"Missing launch file: {_relative_path}"
+
+            self.launch_file = _relative_path
+
+        if self.exec:
+            _relative_path = os.path.relpath(path.join(self.local_path, self.exec))
+            assert path.exists(_relative_path), \
+                    f"Missing exec file: {_relative_path}"
+
+            self.launch_file = _relative_path
 
 
     def __repr__(self):
