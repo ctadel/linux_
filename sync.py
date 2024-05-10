@@ -231,7 +231,7 @@ class Synchronize:
         try:
             os.makedirs(path.dirname(destination), exist_ok=True)
 
-            if os.path.exists(destination):
+            if path.exists(destination) or path.islink(destination):
                 if not self.args.force:
                     raise FileExistsError()
                 os.remove(destination)
