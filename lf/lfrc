@@ -1,0 +1,65 @@
+# Basic Settings
+set icons true
+set ignorecase true
+
+set previewer '~/.config/lf/preview'
+# set cleaner '~/.config/lf/cleaner'
+
+
+# Custom Functions
+cmd trigger ${{
+    case $(file --mime-type "$f" -bL) in
+        text/*|application/json) $EDITOR "$f";;
+        inode/directory)
+          echo "$f">"$LF_UPDATE_DIRECTORY"
+          pkill lf ;;
+        *) xdg-open "$f" ;;
+    esac
+}}
+
+# Create a directory
+cmd mkdir %{{
+    printf "Make directory: "
+    read ans
+    mkdir $ans
+}}
+
+# Create a file
+cmd touch %{{
+    printf "Create a new file: "
+    read ans
+    touch $ans
+}}
+
+# Bindings
+# Remove some defaults
+map m
+map o
+map "'"
+map '"'
+map d
+map c
+map e
+map f
+
+# Basic Functions
+map . set hidden!
+map DD delete
+map p paste
+map x cut
+# map y copy
+map <enter> trigger
+map r rename
+map n search-next
+map N search-prev
+map R reload
+map C clear
+map Y $printf "%s" "$fx" | xclip -selection clipboard
+map N mkdir
+map n touch
+
+# Directory Mapping
+map gd cd ~/Desktop
+map gD cd ~/Downloads
+map gl cd ~/gitlib
+map gp cd ~/Downloads/pwc

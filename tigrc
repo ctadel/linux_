@@ -1,0 +1,47 @@
+# some basic config
+set main-view-date-display = relative
+set main-view-id-display = yes
+set refs-view-date-display = relative
+set refs-view-id-display = yes
+
+
+# COLORS
+# color cursor        white	blue	bold
+color stat-staged   green default bold
+color stat-unstaged red default bold
+
+# Unbinding stuffs
+bind generic g none
+bind generic G none
+bind generic <Esc> :quit
+
+
+# Cursor navigation
+bind generic	<C-g>	view-grep
+bind generic	j	move-down
+bind generic	k	move-up
+bind generic	}	move-half-page-down
+bind generic	{	move-half-page-up
+bind generic	] move-page-down
+bind generic	[	move-page-up
+bind generic	gg	move-first-line
+bind generic	G	move-last-line
+bind main	G	move-last-line
+
+
+# Hack to move to next commit in log view
+bind log } :/Author:
+bind log { :find-prev
+
+
+# Copy bind
+# commit id under the cursor
+bind generic Y @sh -c "echo -n %(commit) | xclip -selection c"
+# file under the cursor
+bind status Y @sh -c "echo -n %(file) | xclip -selection c"
+
+#Misc Binds
+bind refs M <?git merge %(branch)
+
+#Delete file bind
+bind status D !@?rm %(file)

@@ -1,0 +1,56 @@
+# notify = true
+cover = true
+hide_display_names = true
+
+[keybindings]
+##################
+# Queue
+##################
+# Move selected song up/down in the queue
+"q" = "focus library"
+"f" = "focus queue"
+"Ctrl+p" = "focus lib"
+
+"Shift+j" = "shift down 1"
+"Shift+k" = "shift up 1"
+"Shift+c" = "clear"
+# Open the context menu for a Spotify link in the clipboard
+"Ctrl+v" = "insert"
+
+
+# seek
+"Shift+f" = "noop"
+"w" = "seek +10s"
+"Shift+w" = "seek +1s"
+
+
+######################################
+# Movements
+######################################
+# Navigation
+"gg" = "move top"
+"Shift+g" = "move bottom"
+"}" = "move down 5"
+"{" = "move up 5"
+
+# TODO: space to toggle play/pause
+"Space" = "playpause"
+
+## Spotify
+[theme]
+background = "black"
+primary = "light white"
+secondary = "light black"
+title = "green"
+playing = "green"
+playing_selected = "light green"
+playing_bg = "black"
+highlight = "light white"
+highlight_bg = "#484848"
+error = "light white"
+error_bg = "red"
+statusbar = "black"
+statusbar_progress = "green"
+statusbar_bg = "green"
+cmdline = "light white"
+cmdline_bg = "black"
