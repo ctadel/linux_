@@ -116,7 +116,7 @@ def setup_arguments():
             help='Overwrite currently existing configurations', default=False
         )
 
-    parser.add_argument('--log', nargs='?', const='ctadel.Sync.log',
+    parser.add_argument('--log', nargs='?', const='application.log',
             help='Log the events of the program to a file'
         )
 
@@ -132,6 +132,7 @@ def setup_logging(args):
     if not args.log:
         return
 
+    os.chdir(path.dirname(__file__))
     log_file = path.abspath(args.log)
     try:
         os.makedirs(path.dirname(log_file), exist_ok=True)
@@ -309,3 +310,6 @@ if __name__ == "__main__":
     modules = load_configuration()
     sync = Synchronize(modules, args)
     sync.sync()
+
+    if args.log:
+        print(f"\nLogs: {path.abspath(args.log)}")
