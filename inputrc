@@ -1,21 +1,0 @@
-$include  /etc/inputrc
-
-"\C-p":history-search-backward
-"\C-n":history-search-forward
-
-#use ,,x to edit files directly after find command.
-",,1":"pvt vi $(!! | awk '{print $1;exit}') OA"
-",,2":"pvt vi $(!! | awk 'NR==2{print $1}') OA"
-",,3":"pvt vi $(!! | awk 'NR==3{print $1}') OA"
-",,l":"pvt vi $(!! | awk 'END{print $1}') OA"
-
-#use ,x to edit files directly from 'git status'
-",1":"pvt vi $(git status -s | awk '{print $2;exit}') OA"
-",2":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==2 {print}') OA"
-",3":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==3 {print}') OA"
-",4":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==4 {print}') OA"
-",5":"pvt vi $(git status -s | awk '{print $2}' | awk 'NR==5 {print}') OA"
-",l":"pvt vi $(git status -s | awk 'END{print $2}') OA"
-
-
-#",tidjango":"byobutirepotienvOQtirepotienvgs"
