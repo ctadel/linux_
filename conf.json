@@ -3,27 +3,23 @@
     "local_path"      : "shell",
     "files"           : {
           "bashpd.sh"                : ".bashpd",
-          "server_settings.sh"       : ".server_settings",
-          "inputrc"                  : ".inputrc"
+          "server_settings.sh"       : ".server_settings"
         }
     },
 
   "Kitty Terminal"   : {
     "local_path"      : "kitty",
-    "remote_path"     : "~/.config/kitty",
-    "launch_file"      : "konsole.desktop"
+    "remote_path"     : "~/.config/kitty"
   },
 
   "Yazi File Manager"    : {
     "local_path"      : "yazi",
-    "remote_path"     : "~/.config/yazi",
-    "launch_file"      : "yazi.desktop"
+    "remote_path"     : "~/.config/yazi"
   },
 
   "Lunar Vim"    : {
     "local_path"      : "lvim",
-    "remote_path"     : "~/.config/lvim",
-    "launch_file"      : "lvim.desktop"
+    "remote_path"     : "~/.config/lvim"
   },
 
   "Neovim"    : {
@@ -46,8 +42,7 @@
 
   "LF File Manager"    : {
     "local_path"      : "lf",
-    "remote_path"     : "~/.config/lf",
-    "launch_file"      : "lf.desktop"
+    "remote_path"     : "~/.config/lf"
   },
 
   "Tig"       : {
@@ -71,7 +66,6 @@
 
   "Spotify TUI"       : {
     "local_path"  : "ncspot",
-    "remote_path" : "~/.config/ncspot",
-    "launch_file"  : "spotify.desktop"
+    "remote_path" : "~/.config/ncspot"
   }
 }
