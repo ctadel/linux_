@@ -1,7 +1,9 @@
 import os
 import json
 import time
+import shlex
 import argparse
+import subprocess
 from os import path
 from threading import Thread
 from collections import deque
@@ -70,13 +72,6 @@ class Schema:
             _relative_path = os.path.relpath(path.join(self.local_path, self.launch_file))
             assert path.exists(_relative_path), \
                     f"Missing launch file: {_relative_path}"
-
-            self.launch_file = _relative_path
-
-        if self.exec:
-            _relative_path = os.path.relpath(path.join(self.local_path, self.exec))
-            assert path.exists(_relative_path), \
-                    f"Missing exec file: {_relative_path}"
 
             self.launch_file = _relative_path
 
@@ -184,11 +179,18 @@ class DisplayManager:
 
     @staticmethod
     def status_icon(module):
+
+        action_count = len(module.files)
+        if module.exec:
+            action_count += 1
+        if module.launch_file:
+            action_count += 1
+
         if module._synced == 0:
             return '⚫'
-        elif module._synced == len(module.files.keys()):
+        elif module._synced == action_count:
             return '🟢'
-        elif module._synced in range(1, len(module.files)):
+        elif module._synced in range(1, action_count):
             return '⭕'
         return '🔴'
 
@@ -271,6 +273,28 @@ class Synchronize:
                 response = self.create_symlink(module, source, destination)
                 if response:
                     module._synced += 1
+
+            if module.launch_file:
+                launch_file_dir = path.expanduser('~/.local/share/applications/')
+                os.makedirs(launch_file_dir, exist_ok=True)
+                response = self.create_symlink(module,
+                        path.join(module.local_path, path.basename(module.launch_file)), \
+                        path.join(launch_file_dir, path.basename(module.launch_file)))
+                if response:
+                    module._synced += 1
+
+            if module.exec:
+                try:
+                    _command = shlex.split(module.exec)
+
+                    subprocess.Popen(_command, start_new_session=True)
+                    self.console.description.append(
+                            f'✔ Execution of "{module.exec}" for {module.name}')
+                    module._synced += 1
+
+                except Exception as e:
+                    self.console.description.append(
+                            f'✘ Exception while executing "{module.exec}" for {module.name}\n{e}')
 
             if module.files and not module._synced:
                 module._synced = -1
