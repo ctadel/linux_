@@ -1,9 +1,9 @@
 {
   "Shell Scripts"   :  {
     "local_path"      : "shell",
+    "exec"            : "bash shell/add_source.sh",
     "files"           : {
-          "bashpd.sh"                : ".bashpd",
-          "server_settings.sh"       : ".server_settings"
+          "bashpd.sh"                : ".bashpd"
         }
     },
 
