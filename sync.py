@@ -10,6 +10,9 @@ from collections import deque
 from dataclasses import dataclass
 
 
+# To support Python 3.8 and earlier versions
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+
 @dataclass
 class Schema:
     """
@@ -28,10 +31,10 @@ class Schema:
 
     def initialize(self):
         if self.local_path:
-            self.local_path = path.join(path.dirname(__file__),
+            self.local_path = path.join(SCRIPT_DIR,
                                     self.local_path)
         else:
-            self.local_path = path.dirname(__file__)
+            self.local_path = SCRIPT_DIR
 
         self.remote_path = path.expanduser(self.remote_path)
 
@@ -100,7 +103,6 @@ class Schema:
         schema.initialize()
         return schema
 
-
 def setup_arguments():
     """
         Use this function to add/edit sys arguments
@@ -112,7 +114,7 @@ def setup_arguments():
             epilog='prajwaldev.com.np',
          )
 
-    parser.add_argument('--force', action=argparse.BooleanOptionalAction,
+    parser.add_argument('--force', action='store_true',
             help='Overwrite currently existing configurations', default=False
         )
 
@@ -132,7 +134,7 @@ def setup_logging(args):
     if not args.log:
         return
 
-    os.chdir(path.dirname(__file__))
+    os.chdir(SCRIPT_DIR)
     log_file = path.abspath(args.log)
     try:
         os.makedirs(path.dirname(log_file), exist_ok=True)
@@ -159,7 +161,7 @@ def setup_logging(args):
 
 
 def load_configuration():
-    config = path.join(path.dirname(__file__), 'conf.json')
+    config = path.join(SCRIPT_DIR, 'conf.json')
     with open(config) as conf:
         data = json.load(conf)
 
