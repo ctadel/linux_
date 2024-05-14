@@ -118,6 +118,10 @@ def setup_arguments():
             help='Overwrite currently existing configurations', default=False
         )
 
+    parser.add_argument('-i', '--interactive', action='store_true',
+            help='Choose what config to sync at run time', default=False
+        )
+
     parser.add_argument('--log', nargs='?', const='application.log',
             help='Log the events of the program to a file'
         )
@@ -266,18 +270,49 @@ class Synchronize:
             # it just looks cool if texts are moving around
             time.sleep(0.05)
 
+
     def sync(self):
 
-        printer = Thread(target=self.console.display)
-        printer.start()
+        YES = ['a', 'y', 'all', 'yes', 'yeah', 'yep']
+        CHOOSE = ['f', 'c', 'choose', 'some']
+
+        def display_with_input(module, *args, **kwargs):
+            self.console.display(loop=False)
+            print(f"\n --> [{module}]")
+            return input(*args, **kwargs)
+
+        if not self.args.interactive:
+            printer = Thread(target=self.console.display)
+            printer.start()
 
         for module in self.modules.values():
+
+            sync_launch_file = True
+            sync_exec = True
+
+            if self.args.interactive:
+                sync_module = display_with_input(module.name,
+                     "Sync this module? [A/Y - All | F/C - Choose files | * - No]: ")
+                if sync_module.lower() not in YES+CHOOSE:
+                    module._synced = -1
+                    continue
+
             for source, destination in module.files.items():
+                if self.args.interactive:
+                    if sync_module.lower() in CHOOSE:
+                        sync_this_file = display_with_input(module.name, destination + '? [Y/N]: ')
+                        if sync_this_file.lower() not in YES:
+                            continue
                 response = self.create_symlink(module, source, destination)
                 if response:
                     module._synced += 1
 
-            if module.launch_file:
+            if self.args.interactive and \
+                    module.launch_file and sync_module.lower() in CHOOSE:
+                sync_launch_file = display_with_input(module.name, "Add launch file? [Y/N]: ")
+                sync_launch_file = sync_launch_file.lower() in YES
+
+            if module.launch_file and sync_launch_file:
                 launch_file_dir = path.expanduser('~/.local/share/applications/')
                 os.makedirs(launch_file_dir, exist_ok=True)
                 response = self.create_symlink(module,
@@ -286,7 +321,12 @@ class Synchronize:
                 if response:
                     module._synced += 1
 
-            if module.exec:
+            if self.args.interactive and \
+                    module.exec and sync_module.lower() in CHOOSE:
+                sync_exec = display_with_input(module.name, "Execute exec script? [Y/N]: ")
+                sync_exec = sync_exec.lower() in YES
+
+            if module.exec and sync_exec:
                 try:
                     _command = shlex.split(module.exec)
 
