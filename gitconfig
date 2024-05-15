@@ -1,0 +1,26 @@
+[user]
+  name = ctadel
+  email = nep.prajwal@gmail.com
+
+[merge]
+	tool = vimdiff
+	conflictStyle = diff3
+
+[push]
+	default = upstream
+
+[fetch]
+	recurseSubmodules = on-demand
+	prune = true
+
+[rebase]
+	autosquash = true
+
+[pull]
+	rebase = true
+
+# Work stuff
+[includeIf "gitdir:~/ttn/"]
+  [user]
+    name = Prajwal Dev
+    email = prajwal.dev@tothenew.com

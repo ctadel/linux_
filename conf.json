@@ -7,6 +7,12 @@
         }
     },
 
+  "Git"       : {
+    "files"    : {
+        "gitconfig"  : ".gitconfig"
+      }
+  },
+
   "Kitty Terminal"   : {
     "local_path"      : "kitty",
     "remote_path"     : "~/.config/kitty"
