@@ -428,7 +428,7 @@ function ya() {
   tmp="$(mktemp)"
   export YAZI_UPDATE_DIRECTORY=$tmp
 
-	command ~/usr/yazi "$@"
+	command yazi "$@"
   last_directory=$(<"$tmp")
   if [[ -d "$last_directory" && "$last_directory" != "$(pwd)" ]]; then
       cd "$last_directory"

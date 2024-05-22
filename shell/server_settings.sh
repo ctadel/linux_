@@ -15,8 +15,6 @@ function mediaready(){
 
 alias adb="~/usr/platform-tools/adb"
 
-alias yazi="~/usr/yazi"
-
 function pwc(){
     if [[ -z "$1" ]];then
         deactivate_all_envs
