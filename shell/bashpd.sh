@@ -493,4 +493,10 @@ function math(){
   }
 
 alias icat="kitty icat"
+
+# Check if ~/usr/bin directory exists and add to PATH if not already present
+if [ -d "$HOME/usr/bin" ] && [[ ":$PATH:" != *":$HOME/usr/bin:"* ]]; then
+    export PATH="$HOME/usr/bin:$PATH"
+fi
+
 clear

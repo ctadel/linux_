@@ -3,7 +3,7 @@
     "local_path"      : "shell",
     "exec"            : "bash shell/add_source.sh",
     "files"           : {
-          "bashpd.sh"                : ".bashpd"
+          "bashpd.sh"   : ".bashpd"
         }
     },
 

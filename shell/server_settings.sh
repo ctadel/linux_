@@ -129,3 +129,25 @@ EOF
 
 export SONAR_SCANNER_HOME=/opt/sonar-scanner-5.0.1.3006-linux
 export PATH=$PATH:/opt/sonar-scanner-5.0.1.3006-linux/bin
+
+function airpwc(){
+    if [[ -z "$1" ]];then
+        deactivate_all_envs
+        cd ~/ttn/projects/air-pwc
+        pyenv activate airflow
+        export AIRFLOW_HOME=~/ttn/projects/air-pwc
+    else
+        echo "Invalid arguement '$1'"
+    fi
+  }
+
+function weather(){
+    if [[ -z "$1" ]];then
+        deactivate_all_envs
+        cd ~/ttn/projects/weather-pipeline
+        pyenv activate airflow
+        export AIRFLOW_HOME=~/ttn/projects/weather-pipeline
+    else
+        echo "Invalid arguement '$1'"
+    fi
+  }
