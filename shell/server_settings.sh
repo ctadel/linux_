@@ -151,3 +151,5 @@ function weather(){
         echo "Invalid arguement '$1'"
     fi
   }
+
+export DOTFILES_REPOSITORY=/home/prajwal/gitlib/linux_
