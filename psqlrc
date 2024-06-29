@@ -1,10 +1,18 @@
 \set QUIET 1
 
-select case when inet_server_addr()='127.0.0.1' or inet_server_addr() is null then '' else '[REMOTE] ' end as server \gset
+SELECT
+    inet_server_addr() = '127.0.0.1' OR inet_server_addr() = '::1' OR inet_server_addr() IS NULL AS is_local,
+    inet_server_addr() << inet '172.17.0.0/16' AS is_docker
+\gset
 
-/*
-\set PROMPT1 '%[%033[0;31m%]%:server:%[%033[0m%]%/%R%# '
-*/
+\if :is_local
+    \set PROMPT1 '%[%033[0;36m%](LOCAL) %[%033[0m%]%/%R%# '
+\elif :is_docker
+    \set PROMPT1 '%[%033[0;33m%](DOCKER) %[%033[0m%]%/%R%# '
+\else
+    \set PROMPT1 '%[%033[0;31m%](REMOTE) %[%033[0m%]%/%R%# '
+\endif
+
 \set PROMPT2 '=> '
 
 \pset null 'NULL'
@@ -17,6 +25,4 @@ select case when inet_server_addr()='127.0.0.1' or inet_server_addr() is null th
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
 
-/*
 \conninfo
-*/
