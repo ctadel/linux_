@@ -2,13 +2,13 @@
 
 SELECT
     inet_server_addr() = '127.0.0.1' OR inet_server_addr() = '::1' OR inet_server_addr() IS NULL AS is_local,
-    inet_server_addr() << inet '172.17.0.0/16' AS is_docker
+    inet_server_addr() << inet '172.17.0.0/16' AS is_container
 \gset
 
 \if :is_local
     \set PROMPT1 '%[%033[0;36m%](LOCAL) %[%033[0m%]%/%R%# '
-\elif :is_docker
-    \set PROMPT1 '%[%033[0;33m%](DOCKER) %[%033[0m%]%/%R%# '
+\elif :is_container
+    \set PROMPT1 '%[%033[0;33m%](CONTAINER) %[%033[0m%]%/%R%# '
 \else
     \set PROMPT1 '%[%033[0;31m%](REMOTE) %[%033[0m%]%/%R%# '
 \endif

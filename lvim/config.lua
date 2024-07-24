@@ -116,6 +116,7 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.treesitter.highlight.additional_vim_regex_highlighting = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = { "bash", "c", "javascript", "json", "lua", "python", "typescript", "tsx", "css", "rust", "java", "yaml", }
@@ -130,7 +131,7 @@ lvim.plugins = {
         vim.cmd "highlight default link gitblame SpecialComment"
         vim.g.gitblame_enabled = 1
         vim.g.gitblame_date_format = '%r'
-        vim.g.gitblame_message_when_not_committed = '🤷🤷🤷 gotta commit this now...'
+        vim.g.gitblame_message_when_not_committed = '  🤷 Oh man!! gotta commit this now...'
         vim.g.gitblame_delay = 300
       end,
     },
@@ -234,6 +235,30 @@ end
 
 lvim.keys.normal_mode["<F5>"] = "<Esc>:lua run_current_file()<CR>"
 
+
+-- Function to copy the text with colors
+vim.api.nvim_create_user_command('RichCopy', function (args)
+  local saved_html_use_css = vim.g.html_use_css
+  local saved_html_no_progress = vim.g.html_no_progress
+  vim.g.html_use_css = false
+  vim.g.html_no_progress = true
+
+  vim.cmd {
+    cmd = 'TOhtml',
+    range = { args.line1, args.line2 },
+  }
+  vim.g.html_use_css = saved_html_use_css
+  vim.g.html_no_progress = saved_html_no_progress
+
+  vim.cmd([[%s/^\s*[^ ]*\.html\s*//e]])
+  vim.cmd 'w !xclip -selection clipboard -t text/html -i'
+  vim.cmd.bwipeout { bang = true }
+
+end, {
+ range = '%',
+})
+
+-- lvim.keys.visual_mode['Y'] = {':RichCopy<CR>', noremap = true, silent=true}
 
 
 function GoTo_DAP_Repl_window()
