@@ -60,8 +60,8 @@ lvim.keys.normal_mode["<C-w>"] = ":bd<cr>"
 
 lvim.keys.insert_mode["<C-BS>"] = "<C-w>"
 
-lvim.keys.command_mode["jk"] = "<C-c>"
-lvim.keys.command_mode["JK"] = "<C-c>"
+-- lvim.keys.command_mode["jk"] = "<C-c>"
+-- lvim.keys.command_mode["JK"] = "<C-c>"
 lvim.keys.normal_mode["<C-l>"] = ":noh<cr>"
 lvim.keys.normal_mode["j"] = "gj"
 lvim.keys.normal_mode["k"] = "gk"
@@ -204,8 +204,8 @@ function _G.is_at_end()
 end
 
 lvim.keys.insert_mode["<Esc>"] = "<Esc>:lua is_at_end()<CR>"
-lvim.keys.insert_mode["jk"] = "<Esc>:lua is_at_end()<CR>"
-lvim.keys.insert_mode["JK"] = "<Esc>:lua is_at_end()<CR>"
+-- lvim.keys.insert_mode["jk"] = "<Esc>:lua is_at_end()<CR>"
+-- lvim.keys.insert_mode["JK"] = "<Esc>:lua is_at_end()<CR>"
 -- lvim.keys.insert_mode["kj"] = "<Esc>:lua is_at_end()<CR>"
 -- lvim.keys.insert_mode["KJ"] = "<Esc>:lua is_at_end()<CR>"
 
