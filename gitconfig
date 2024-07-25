@@ -18,9 +18,3 @@
 
 [pull]
 	rebase = true
-
-# Work stuff
-[includeIf "gitdir:~/ttn/"]
-  [user]
-    name = Prajwal Dev
-    email = prajwal.dev@tothenew.com
