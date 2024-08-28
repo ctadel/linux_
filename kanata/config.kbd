@@ -5,9 +5,9 @@
 )
 
 (defalias
-  esccaps (tap-hold 0 300 esc caps)
+  escesc (tap-hold 0 1 esc esc)
 )
 
 (deflayer base
-  @esccaps
+  @escesc
 )

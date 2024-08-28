@@ -1,17 +1,21 @@
 \set QUIET 1
 
 SELECT
-    inet_server_addr() = '127.0.0.1' OR inet_server_addr() = '::1' OR inet_server_addr() IS NULL AS is_local,
-    inet_server_addr() << inet '172.17.0.0/16' AS is_container
+    (inet_server_addr() = '127.0.0.1' OR inet_server_addr() = '::1') AS is_local,
+    (inet_server_addr() << inet '172.17.0.0/16') AS is_container,
+    inet_server_addr() IS NULL AS is_redshift
 \gset
 
-\if :is_local
+\if :is_redshift
+    \set PROMPT1 '%[%033[0;31m%](REDSHIFT) %[%033[0m%]%/%R%# '
+\elif :is_local
     \set PROMPT1 '%[%033[0;36m%](LOCAL) %[%033[0m%]%/%R%# '
 \elif :is_container
     \set PROMPT1 '%[%033[0;33m%](CONTAINER) %[%033[0m%]%/%R%# '
 \else
     \set PROMPT1 '%[%033[0;31m%](REMOTE) %[%033[0m%]%/%R%# '
 \endif
+
 
 \set PROMPT2 '=> '
 
