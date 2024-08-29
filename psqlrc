@@ -1,23 +1,43 @@
 \set QUIET 1
 
+-- References to colors, used in :environment
+\set c_default '%[%033[0m%]'
+\set c_red '%[%033[40;31m%]'
+\set c_green '%[%033[40;32m%]'
+\set c_yellow '%[%033[40;33m%]'
+\set c_blue '%[%033[40;34m%]'
+\set c_purple '%[%033[40;35m%]'
+\set c_cyan '%[%033[40;36m%]'
+
+-- Prompt Components
+\set c_bar '%[%033[49;38;5;237m%]'
+\set c_fillers '%[%033[48;5;237;38;5;27m%]'
+\set c_database '%[%033[48;5;237;38;5;82m%]'
+\set c_main_bar '%[%033[48;5;237;38;5;250m%]'
+\set c_transaction '%[%033[48;5;237;38;5;1m%]'
+
 SELECT
-    (inet_server_addr() = '127.0.0.1' OR inet_server_addr() = '::1') AS is_local,
-    (inet_server_addr() << inet '172.17.0.0/16') AS is_container,
-    inet_server_addr() IS NULL AS is_redshift
+  CASE
+    WHEN inet_server_addr() IN ('127.0.0.1', '::1') THEN '%[%033[40;36m%]「✦ LOCAL ✦ 」'
+    WHEN inet_server_addr() <<= '172.17.0.0/16' THEN '%[%033[40;33m%]「✦ CONTAINER ✦ 」'
+    WHEN inet_server_addr() IS NULL THEN '%[%033[40;31m%]「✦ REDSHIFT ✦ 」'
+    ELSE '%[%033[40;32m%]「✦ REMOTE ✦ 」'
+  END AS environment
 \gset
 
-\if :is_redshift
-    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;31m%]「✦ REDSHIFT ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
-\elif :is_local
-    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;36m%]「✦ LOCAL ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
-\elif :is_container
-    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;33m%]「✦ CONTAINER ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
-\else
-    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;31m%]「✦ REMOTE ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
-\endif
+-- Initializing PROMPT1 to ''
+\set PROMPT1
 
+\set PROMPT1 :PROMPT1 :c_bar '▌'
+\set PROMPT1 :PROMPT1 :environment
+\set PROMPT1 :PROMPT1 :c_main_bar ' %n@%m '
+\set PROMPT1 :PROMPT1 :c_fillers 'in '
+\set PROMPT1 :PROMPT1 :c_database '⛁ %/ '
+\set PROMPT1 :PROMPT1 :c_transaction '%x%x%x'
+\set PROMPT1 :PROMPT1 :c_bar '\n'
+\set PROMPT1 :PROMPT1 :c_default '⚡ '
 
-\set PROMPT2 '%[%033[49;38;5;237m%] ➥ %[%033[0m%]'
+\set PROMPT2 :c_bar ' ➥ ' :c_default
 
 \pset null 'NULL'
 \pset pager always
