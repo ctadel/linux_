@@ -1,35 +1,41 @@
 \set QUIET 1
 
 -- References to colors, used in :environment
-\set c_default '%[%033[0m%]'
-\set c_red '%[%033[40;31m%]'
-\set c_green '%[%033[40;32m%]'
-\set c_yellow '%[%033[40;33m%]'
-\set c_blue '%[%033[40;34m%]'
-\set c_purple '%[%033[40;35m%]'
-\set c_cyan '%[%033[40;36m%]'
+\set red '%[%033[40;31m%]'
+\set green '%[%033[40;32m%]'
+\set yellow '%[%033[40;33m%]'
+\set blue '%[%033[40;34m%]'
+\set purple '%[%033[40;35m%]'
+\set cyan '%[%033[40;36m%]'
+\set orange '%[%033[38;5;208m%]'
 
 -- Prompt Components
+\set c_default '%[%033[0m%]'
 \set c_bar '%[%033[49;38;5;237m%]'
 \set c_fillers '%[%033[48;5;237;38;5;27m%]'
 \set c_database '%[%033[48;5;237;38;5;82m%]'
 \set c_main_bar '%[%033[48;5;237;38;5;250m%]'
 \set c_transaction '%[%033[48;5;237;38;5;1m%]'
 
-SELECT
-  CASE
-    WHEN inet_server_addr() IN ('127.0.0.1', '::1') THEN '%[%033[40;36m%]「✦ LOCAL ✦ 」'
-    WHEN inet_server_addr() <<= '172.17.0.0/16' THEN '%[%033[40;33m%]「✦ CONTAINER ✦ 」'
-    WHEN inet_server_addr() IS NULL THEN '%[%033[40;31m%]「✦ REDSHIFT ✦ 」'
-    ELSE '%[%033[40;32m%]「✦ REMOTE ✦ 」'
-  END AS environment
-\gset
+-- Set the environment name and color
+WITH environment AS(
+  SELECT
+    CASE
+      WHEN inet_server_addr() IN ('127.0.0.1', '::1') THEN ARRAY['LOCAL', :'cyan']
+      WHEN inet_server_addr() <<= '172.17.0.0/16' THEN ARRAY['CONTAINER', :'yellow']
+      WHEN inet_server_addr() IS NULL THEN ARRAY['REDSHIFT', :'orange']
+      ELSE ARRAY['REMOTE', :'red']
+    END AS env
+) SELECT
+    env[1] AS env_name,
+    env[2] AS env_color
+FROM environment \gset
 
 -- Initializing PROMPT1 to ''
 \set PROMPT1
 
 \set PROMPT1 :PROMPT1 :c_bar '▌'
-\set PROMPT1 :PROMPT1 :environment
+\set PROMPT1 :PROMPT1 :env_color '「✦ ' :env_name' ✦ 」'
 \set PROMPT1 :PROMPT1 :c_main_bar ' %n@%m '
 \set PROMPT1 :PROMPT1 :c_fillers 'in '
 \set PROMPT1 :PROMPT1 :c_database '⛁ %/ '
@@ -48,5 +54,7 @@ SELECT
 \set HISTSIZE 100000000
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
+
+--\pset linestyle unicode
 
 --\conninfo
