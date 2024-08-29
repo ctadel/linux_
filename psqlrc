@@ -7,26 +7,26 @@ SELECT
 \gset
 
 \if :is_redshift
-    \set PROMPT1 '%[%033[0;31m%](REDSHIFT) %[%033[0m%]%/%R%# '
+    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;31m%]「✦ REDSHIFT ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
 \elif :is_local
-    \set PROMPT1 '%[%033[0;36m%](LOCAL) %[%033[0m%]%/%R%# '
+    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;36m%]「✦ LOCAL ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
 \elif :is_container
-    \set PROMPT1 '%[%033[0;33m%](CONTAINER) %[%033[0m%]%/%R%# '
+    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;33m%]「✦ CONTAINER ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
 \else
-    \set PROMPT1 '%[%033[0;31m%](REMOTE) %[%033[0m%]%/%R%# '
+    \set PROMPT1 '%[%033[49;38;5;237m%]▌%[%033[40;31m%]「✦ REMOTE ✦ 」%[%033[48;5;237;38;5;250m%] %n@%m %[%033[48;5;237;38;5;27m%]in %[%033[48;5;237;38;5;82m%]⛁ %/ %[%033[49;38;5;237m%]\n%[%033[0m%]⚡ '
 \endif
 
 
-\set PROMPT2 '=> '
+\set PROMPT2 '%[%033[49;38;5;237m%] ➥ %[%033[0m%]'
 
 \pset null 'NULL'
 \pset pager always
 
-\timing
+--\timing
 \x auto
 
 \set HISTSIZE 100000000
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
 
-\conninfo
+--\conninfo

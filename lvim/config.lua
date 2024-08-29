@@ -260,6 +260,24 @@ end, {
 
 -- lvim.keys.visual_mode['Y'] = {':RichCopy<CR>', noremap = true, silent=true}
 
+local function format_sql()
+  -- Save the current buffer content to a temporary file
+  local tmpfile = vim.fn.tempname() .. '.sql'
+  vim.cmd('write ' .. tmpfile)
+
+  -- Run the sqlformat command on the temporary file
+  local cmd = 'sqlformat -i lower -k upper -r ' .. tmpfile
+  local formatted_sql = vim.fn.system(cmd)
+
+  -- Replace the buffer content with the formatted SQL
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(formatted_sql, '\n'))
+
+  -- Delete the temporary file
+  vim.fn.delete(tmpfile)
+end
+
+-- Create a command to call the format_sql function
+vim.api.nvim_create_user_command('FormatSQL', format_sql, {})
 
 function GoTo_DAP_Repl_window()
   local repetitions = 10  -- Number of times to repeat the commands

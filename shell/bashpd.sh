@@ -273,7 +273,7 @@ if [ -f /usr/bin/xsel ] || [ -f ~/usr/bin/xsel ]; then
 fi
 
 if [ -f  /usr/bin/psql ]; then
-    # alias psql="psql --set PROMPT1='%[%033[0;34m%]%(LOCAL) %[%033[0m%]%/%R%# '"
+    alias psql="psql -h localhost -U postgres"
     alias tipsql="psql -h192.168.1.208 -dtradein_clients -Utradein  --set PROMPT1='%[%033[0;36m%]%(LOCAL) %[%033[0m%]%/%R%# '"
     alias rpsql="psql -h34.93.71.99 -dtradein_clients -Utradein_dev --set PROMPT1='%[%033[0;31m%]%(REMOTE) %[%033[0m%]%/%R%# '"
     alias redshift="psql -h group2.353591720586.ap-south-1.redshift-serverless.amazonaws.com -p 5439 -U admin -d dev"
