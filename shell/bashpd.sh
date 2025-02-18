@@ -500,4 +500,9 @@ if [ -d "$HOME/usr/bin" ] && [[ ":$PATH:" != *":$HOME/usr/bin:"* ]]; then
     export PATH="$HOME/usr/bin:$PATH"
 fi
 
+# Check if ~/.local/bin directory exists and add to PATH if not already present
+if [ -d "$HOME/.local/bin" ] && [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
 clear

@@ -47,7 +47,7 @@ vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab
 vim.opt.cursorline = false -- highlight the current line
 vim.opt.number = true -- set numbered lines
-vim.opt.relativenumber = false -- set relative numbered lines
+vim.opt.relativenumber = true -- set relative numbered lines
 vim.opt.numberwidth = 4 -- set number column width to 2 {default 4}
 vim.opt.signcolumn = "yes" -- always show the sign column otherwise it would shift the text each time
 vim.opt.wrap = true -- display lines as one long line
@@ -141,6 +141,7 @@ lvim.plugins = {
   "ChristianChiarulli/swenv.nvim",
   "stevearc/dressing.nvim",
   "mfussenegger/nvim-dap-python",
+  "github/copilot.vim",
 }
 
 
@@ -334,3 +335,11 @@ lvim.builtin.which_key.mappings["C"] = {
   name = "Python",
   c = { "<cmd>lua require('swenv.api').pick_venv()<cr>", "Choose Env" },
 }
+
+
+-- Disable copilot (very expensive tokens)
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.cmd("Copilot disable")
+    end,
+})
