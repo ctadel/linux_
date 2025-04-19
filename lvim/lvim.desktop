@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=LunarVim
+Comment=An IDE layer for Neovim with sane defaults. Completely free and community driven.
+Exec=kitty --title 'LunarVim IDE' --name lvim lvim
+Icon=lvim
+Type=Application
+Categories=Utility;TextEditor;
+StartupNotify=true
+X-Ubuntu-Gettext-Domain=terminator
+X-Ayatana-Desktop-Shortcuts=NewWindow;
+Keywords=Text;editor;
+[NewWindow Shortcut Group]
+Name=Open a New Window
+TargetEnvironment=Unity

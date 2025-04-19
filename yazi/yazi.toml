@@ -1,86 +1,95 @@
 [manager]
-layout         = [ 1, 4, 3 ]
-sort_by        = "modified"
-sort_sensitive = true
-sort_reverse   = true
+ratio = [1, 4, 3]
+sort_by = "natural"
+sort_sensitive = false
+sort_reverse = false
 sort_dir_first = true
-linemode       = "none"
-show_hidden    = false
-show_symlink   = true
+sort_translit = false
+linemode = "size"
+show_hidden = false
+show_symlink = true
+scrolloff = 5
+mouse_events = ["click", "scroll", "touch", "move", "drag"]
 
 [preview]
-tab_size        = 2
-max_width       = 600
-max_height      = 900
-cache_dir       = ""
-ueberzug_scale  = 1
-ueberzug_offset = [ 0, 0, 0, 0 ]
-
-[opener]
-edit = [
-	{ exec = '$EDITOR "$@"', block = true,  desc = "Vim", for = "unix" },
-	{ exec = 'code "%*"',    orphan = true, desc = "Vim", for = "windows" },
-]
-open = [
-	{ exec = 'xdg-open "$@"',             desc = "Open", for = "linux" },
-	{ exec = 'open "$@"',                 desc = "Open", for = "macos" },
-	{ exec = 'start "%1"', orphan = true, desc = "Open", for = "windows" }
-]
-reveal = [
-	{ exec = 'open -R "$1"',                       desc = "Reveal", for = "macos" },
-	{ exec = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
-	{ exec = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
-]
-extract = [
-	{ exec = 'unzip "$1"', desc = "Extract here", for = "unix" },
-	{ exec = 'unzip "%1"', desc = "Extract here", for = "windows" },
-]
-play = [
-	{ exec = 'vlc "$@"', orphan = true, for = "unix" },
-	{ exec = 'vlc "%1"', orphan = true, for = "windows" },
-	{ exec = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-]
-
-switch = [
-	{ exec = 'echo $@>$YAZI_UPDATE_DIRECTORY && pkill yazi', desc="Switch Directory", orphan = true, for = "unix" },
-]
-
-archive = [
-	{ exec = 'zip -r "$1.zip" $(basename $1)', desc="Archive", orphan = true, for = "unix" },
-]
-
+tab_size = 2
+max_width = 600
+max_height = 900
+image_filter = "triangle"
+image_quality = 75
+sixel_fraction = 15
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
 
 [open]
 rules = [
-	{ name = "*/", use = [ "switch", "open", "reveal", "archive" ] },
+  { mime = "text/*", use = ["edit"] },
+  { mime = "image/*", use = ["open", "edit_image"] },
+  { mime = "video/*", use = ["play"] },
+  { mime = "application/*", use = ["open"] },
 
-	{ mime = "text/*",  use = [ "edit", "open", "reveal" ] },
-	{ mime = "image/*", use = [ "open", "reveal" ] },
-	{ mime = "video/*", use = [ "play", "reveal" ] },
-	{ mime = "audio/*", use = [ "play", "reveal" ] },
-	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
+  { name = "*.py", use = ["edit", "execute"] },
+  # { name = "*.sql", use = ["edit", "execute"] },
+  { mime = "text/csv", use = ["open", "edit"] },
+  { mime = "*.json", use = ["edit", "open_in_browser"] },
+  { mime = "text/html", use = ["edit", "open_in_browser"] },
+  { mime = "application/zip", use = ["open_archive", "extract_here", "extract_to_named"] },
+  { mime = "application/json", use = ["open", "edit", "open_in_browser"] },
+  { mime = "application/pdf", use = ["open", "open_in_browser"] },
+  { mime = "inode/directory", use = ["open_terminal"] },
 
-	{ mime = "application/json", use = [ "edit", "reveal" ] },
-	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
-
-	{ mime = "application/zip",             use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/gzip",            use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/x-tar",           use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/x-bzip",          use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/x-bzip2",         use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/x-7z-compressed", use = [ "open", "extract", "reveal" ] },
-	{ mime = "application/x-rar",           use = [ "open", "extract", "reveal" ] },
-
-	{ mime = "*", use = [ "open", "reveal" ] },
+  { name = "*", use = ["reveal"] },
 ]
 
-[tasks]
-micro_workers = 5
-macro_workers = 10
-bizarre_retry = 5
+[[opener.open]]
+run = 'xdg-open "$@"'
+desc = "Open"
 
-[plugins]
-preload = []
+[[opener.edit]]
+run = 'lvim "$@"'
+desc = "Edit with Vim"
+block = true
 
-[log]
-enabled = false
+[[opener.execute]]
+run = 'python3 "$@"'
+desc = "Execute (code)"
+
+[[opener.open_in_browser]]
+run = 'google-chrome-stable "$@"'
+desc = "Open in Chrome"
+orphan = true
+
+[[opener.edit_image]]
+run = 'display-im6 "$@"'
+desc = "Edit with Imagemagick"
+orphan = true
+
+[[opener.play]]
+run = 'vlc "$@"'
+desc = "Play with VLC"
+orphan = true
+
+[[opener.extract_here]]
+run = 'unzip "$1"'
+desc = "Extract Here"
+
+[[opener.extract_to_named]]
+run = '''
+dir="${1%.*}"
+mkdir -p "$dir"
+unzip -d "$dir" "$1"
+'''
+desc = "Extract with folder/"
+
+[[opener.open_archive]]
+run = 'file-roller "$@"'
+orphan = true
+desc = "Open with Archive Manager"
+
+[[opener.open_terminal]]
+run = 'kitty --working-directory "$1"'
+desc = "Open in Terminal"
+
+[[opener.reveal]]
+run = 'nautilus --select "$1"'
+desc = "Reveal in Files"
