@@ -1,14 +1,35 @@
 [[manager.prepend_keymap]]
+on   = [ "q" ]
+run  = "quit --no-cwd-file"
+desc = "Quit without outputting cwd-file"
+
+[[manager.prepend_keymap]]
+on = ["<C-Enter>"]
+run = ["enter", "quit"]
+desc = "Enter dir and write cwd + exit"
+
+
+[[manager.prepend_keymap]]
 on   = [ "g", "a" ]
 run  = "cd /archive"
 desc = "Cd to /archive"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "f" ]
-run  = "cd ~/Downloads"
-desc = "Cd to ~/Downloads"
-
-[[manager.prepend_keymap]]
 on   = [ "g", "l" ]
 run  = "cd ~/gitlib"
 desc = "Cd to ~/gitlib"
+
+[[manager.prepend_keymap]]
+on   = [ ">" ]
+run  = "plugin what-size"
+desc = "Calc size of selection or cwd"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "m" ]
+run  = "plugin chmod"
+desc = "Chmod on selected files"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"

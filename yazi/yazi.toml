@@ -15,20 +15,32 @@ mouse_events = ["click", "scroll", "touch", "move", "drag"]
 tab_size = 2
 max_width = 600
 max_height = 900
-image_filter = "triangle"
+# image_filter = "triangle"
+image_filter = "magick"
 image_quality = 75
 sixel_fraction = 15
 ueberzug_scale = 1
 ueberzug_offset = [0, 0, 0, 0]
 
+[[preview.image_rules]]
+mime = "image/heic"
+run = "magick \"$1\" jpg:-"
+
+[[preview.image_rules]]
+mime = "image/heif"
+run = "magick \"$1\" jpg:-"
+
 [open]
 rules = [
   { mime = "text/*", use = ["edit"] },
-  { mime = "image/*", use = ["open", "edit_image"] },
+  { mime = "image/*", use = ["open", "edit_photogimp","edit_im"] },
   { mime = "video/*", use = ["play"] },
   { mime = "application/*", use = ["open"] },
 
   { name = "*.py", use = ["edit", "execute"] },
+  { name = "*.js", use = ["edit", "execute"] },
+  { name = "*.jsx", use = ["edit", "execute"] },
+  { name = "*.tx", use = ["edit", "execute"] },
   # { name = "*.sql", use = ["edit", "execute"] },
   { mime = "text/csv", use = ["open", "edit"] },
   { mime = "*.json", use = ["edit", "open_in_browser"] },
@@ -36,7 +48,7 @@ rules = [
   { mime = "application/zip", use = ["open_archive", "extract_here", "extract_to_named"] },
   { mime = "application/json", use = ["open", "edit", "open_in_browser"] },
   { mime = "application/pdf", use = ["open", "open_in_browser"] },
-  { mime = "inode/directory", use = ["open_terminal"] },
+  { mime = "inode/directory", use = ["open", "open_terminal"] },
 
   { name = "*", use = ["reveal"] },
 ]
@@ -50,6 +62,10 @@ run = 'lvim "$@"'
 desc = "Edit with Vim"
 block = true
 
+# [[opener.change_directory]]
+# run = 'pkill yazi'
+# desc = "Change Directory"
+
 [[opener.execute]]
 run = 'python3 "$@"'
 desc = "Execute (code)"
@@ -59,9 +75,14 @@ run = 'google-chrome-stable "$@"'
 desc = "Open in Chrome"
 orphan = true
 
-[[opener.edit_image]]
+[[opener.edit_im]]
 run = 'display-im6 "$@"'
 desc = "Edit with Imagemagick"
+orphan = true
+
+[[opener.edit_photogimp]]
+run = 'flatpak run org.gimp.GIMP//stable "$@"'
+desc = "Edit with PhotoGIMP"
 orphan = true
 
 [[opener.play]]
@@ -81,6 +102,10 @@ unzip -d "$dir" "$1"
 '''
 desc = "Extract with folder/"
 
+[[opener.manual]]
+run = "ya.rename"
+desc = "Test manual rename"
+
 [[opener.open_archive]]
 run = 'file-roller "$@"'
 orphan = true
@@ -93,3 +118,39 @@ desc = "Open in Terminal"
 [[opener.reveal]]
 run = 'nautilus --select "$1"'
 desc = "Reveal in Files"
+
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
+
+[plugin]
+prepend_preloaders = [
+    # Media information
+    { mime = "{audio,video,image}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "mediainfo" },
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    # { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { name = "*.docx", run = "office" },
+]
+
+prepend_previewers = [
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    # { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { name = "*.docx", run = "office" },
+    # Media information
+    { mime = "{audio,video,image}/*", run = "mediainfo"},
+    { mime = "application/subrip", run = "mediainfo" },
+]
