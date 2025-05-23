@@ -24,3 +24,17 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+
+[alias]
+    history = "!f() { \
+        if [ \"$#\" -eq 0 ]; then \
+            echo \"Custom git alias\"; \
+            echo \"Usage: git history <file1> [file2 ...]\"; \
+            return 1; \
+        fi; \
+        for file in \"$@\"; do \
+            git log --reverse --follow --format=%H \"$file\" | while read -r commit; do \
+                git show --color=always \"$commit\" -- \"$file\"; \
+            done; \
+        done | less -R; \
+    }; f"
