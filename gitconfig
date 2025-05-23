@@ -19,10 +19,8 @@
 [pull]
 	rebase = true
 [credential "https://github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
 
 [alias]
@@ -37,4 +35,64 @@
                 git show --color=always \"$commit\" -- \"$file\"; \
             done; \
         done | less -R; \
+    }; f"
+
+    backup = "!f() { \
+        if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then \
+            echo '❌ Not inside a Git repository.'; \
+            exit 1; \
+        fi; \
+        OUT=\"${1:-git-backup-$(date +%Y%m%d-%H%M%S).zip}\"; \
+        git ls-files --others --cached --exclude-standard -z | \
+        grep -zvE '\\.gitignore|\\.dockerignore' | \
+        xargs -0 zip -r \"$OUT\" > /dev/null; \
+        echo \"✔ Backup created at $OUT\"; \
+    }; f"
+
+    quicksave = "!f() { \
+      if ! git rev-parse --git-dir > /dev/null 2>&1; then echo 'Not a git repository'; exit 1; fi; \
+      label=\"${1:-}\"; \
+      timestamp=$(date +%Y%m%d-%H%M%S); \
+      if [ -n \"$label\" ]; then \
+        msg=\"__QuickSave__[$timestamp] $label\"; \
+      else \
+        msg=\"__QuickSave__[$timestamp]\"; \
+      fi; \
+      git stash push -u -m \"$msg\" && echo \"QuickSaved: $msg\"; \
+    }; f"
+
+    quicksee = "!f() { \
+      if ! git rev-parse --git-dir > /dev/null 2>&1; then echo 'Not a git repository'; exit 1; fi; \
+      label=\"\"; \
+      if [ $# -ge 1 ]; then \
+        case \"$1\" in \
+          -*) ;; \
+          *) label=\"$1\"; shift ;; \
+        esac; \
+      fi; \
+      if [ -n \"$label\" ]; then \
+        stash=$(git stash list --format='%gd %gs' | grep \"__QuickSave__.*$label\" | head -1 | awk '{print $1}'); \
+        if [ -z \"$stash\" ]; then echo 'No matching QuickSave found for label:' \"$label\"; exit 1; fi; \
+      else \
+        stash=$(git stash list --format='%gd %gs' | grep '__QuickSave__' | head -1 | awk '{print $1}'); \
+        if [ -z \"$stash\" ]; then echo 'No QuickSave found.'; exit 1; fi; \
+      fi; \
+      git stash show \"$stash\" \"$@\"; \
+    }; f"
+
+    quickapply = "!f() { \
+      if ! git rev-parse --git-dir > /dev/null 2>&1; then echo 'Not a git repository'; exit 1; fi; \
+      label=\"${1:-}\"; \
+      if ! git diff --quiet --ignore-submodules; then \
+        read -p 'You have unstaged changes. Save them before applying QuickSave? (yes/no): ' ans; \
+        case \"$ans\" in y|Y|yes|YES) git stash push -u ;; *) git reset --hard ;; esac; \
+      fi; \
+      if [ -n \"$label\" ]; then \
+        stash=$(git stash list --format='%gd %gs' | grep \"__QuickSave__.*$label\" | head -1 | awk '{print $1}'); \
+        if [ -z \"$stash\" ]; then echo 'No matching QuickSave found for label:' \"$label\"; exit 1; fi; \
+      else \
+        stash=$(git stash list --format='%gd %gs' | grep '__QuickSave__' | head -1 | awk '{print $1}'); \
+        if [ -z \"$stash\" ]; then echo 'No QuickSave found.'; exit 1; fi; \
+      fi; \
+      git stash apply \"$stash\" && echo \"Applied QuickSave: $stash\"; \
     }; f"
