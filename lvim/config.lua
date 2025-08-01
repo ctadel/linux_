@@ -74,6 +74,39 @@ vim.api.nvim_exec([[
   silent! nunmap [q
 ]], false)
 
+
+
+lvim.builtin.alpha.dashboard.section.header.val = {
+"                                                                                                                   ",
+"                                                                                                                   ",
+"                                                                                                                   ",
+"             ..:--:::...               .                                                                           ",
+"          .:---:.......::..            .          ....   .......     ...      ......     ....   ..                 ",
+"        .----.         .::--:.         .        .::..::. ..:--:..  .-:.:::    -::.:-:   :-:...  :-                 ",
+"       ----.               .---.       .        :-.  :-.    ::     ::.  :-.   ::   :-  .::      ::                 ",
+"      ----      .:.   .:.    :--:      .        ::.        .::     ::.  ::.   ::  .::  .::      ::                 ",
+"     :---.     --.     .-     :--:     .        :-::       .:::.   :-:..:::   --::.::  .-:.::   :-:.               ",
+"     ----     ---       .      ---     .       ::::       .:::.   :::::::-.  :::.  -- .:::..   :::.                ",
+"     ----     ---              ---.    .       ..:.       ..::    :::.  ::. ..::   -: ..::     .::                 ",
+"     ----     :--              ---     .        :-.  .:.   .-:     :-.  ::.   -:   :-  .-:      ::                 ",
+"     .---:     :-:            ---.     .        .-:  ::.   .-:     :-.  :-.   -:. :-:  .-:.     :-.                ",
+"      :---:      ..         .---.      .          .::..     ::     .:.  .:.   :::::.    .::::.   .::::             ",
+"       .---:              .---:        .                                                                           ",
+"         :---:.     ...::-::.          .        ... :: .:  : :.: .: .. :.. :. ..   .. ... :.:   .:. :.             ",
+"           .:----:.......              .                                                                           ",
+"               ..:::...                                                                                            ",
+"                                                                                                                   ",
+"                                                                                                                   ",
+}
+
+lvim.builtin.alpha.dashboard.section.footer.val = {
+    "",
+    "     nep.prajwal@gmail.com",
+    "https://www.prajwaldev.com.np",
+}
+
+
+
 lvim.keys.normal_mode["["] = "10k"
 lvim.keys.normal_mode["]"] = "10j"
 
@@ -81,6 +114,7 @@ lvim.keys.normal_mode["n"] = "nzz"
 lvim.keys.normal_mode["N"] = "Nzz"
 
 lvim.keys.visual_mode['Y'] = '"+y'
+lvim.keys.normal_mode['<C-S-Y>'] = '"+y$'
 
 -- Move the selected lines up/down with J and K respectively.
 lvim.keys.visual_mode["J"] = ":m '>+1<CR>gv=gv"
@@ -119,7 +153,7 @@ lvim.builtin.treesitter.highlight.enable = true
 lvim.builtin.treesitter.highlight.additional_vim_regex_highlighting = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = { "bash", "c", "javascript", "json", "lua", "python", "typescript", "tsx", "css", "rust", "java", "yaml", }
+lvim.builtin.treesitter.ensure_installed = { "bash", "c", "javascript", "json", "python", "typescript", "tsx", "css"}
 
 -- Additional Plugins
 lvim.plugins = {
@@ -142,7 +176,42 @@ lvim.plugins = {
   "stevearc/dressing.nvim",
   "mfussenegger/nvim-dap-python",
   "github/copilot.vim",
+  {
+    "sphamba/smear-cursor.nvim",
+    config = function()
+    require("smear_cursor").setup {
+          opts = {
+                -- Smear cursor when switching buffers or windows.
+                smear_between_buffers = true,
+
+                -- Smear cursor when moving within line or to neighbor lines.
+                -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+                smear_between_neighbor_lines = true,
+
+                -- Draw the smear in buffer space instead of screen space when scrolling
+                scroll_buffer_space = true,
+
+                -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+                -- Smears will blend better on all backgrounds.
+                legacy_computing_symbols_support = false,
+
+                -- Smear cursor in insert mode.
+                -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+                smear_insert_mode = true,
+                time_interval = 10
+          },
+        }
+    end,
+  },
+
 }
+
+-- Copilot config
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-CR>", 'copilot#Accept("<CR>")', { expr = true, silent = true, noremap = true })
+vim.api.nvim_set_keymap("i", "<C-]>", "<Plug>(copilot-next)", {})
+vim.api.nvim_set_keymap("i", "<C-[>", "<Plug>(copilot-previous)", {})
+vim.api.nvim_set_keymap("i", "<C-\\>", "<Plug>(copilot-dismiss)", {})
 
 
 require("telescope").load_extension "file_browser"
@@ -337,9 +406,6 @@ lvim.builtin.which_key.mappings["C"] = {
 }
 
 
--- Disable copilot (very expensive tokens)
-vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-        vim.cmd("Copilot disable")
-    end,
-})
+-- Format selected Python code with black/autopep8
+vim.keymap.set('v', '<leader>pf', ':<C-u>\'<,\'>!python -m json.tool<CR>', { desc = "Format Python dict as JSON" })
+

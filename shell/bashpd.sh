@@ -422,4 +422,4 @@ function ya() {
 }
 
 
-clear
+eval "$(gh copilot alias -- zsh)"

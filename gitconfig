@@ -23,6 +23,9 @@
 [credential "https://gist.github.com"]
 	helper = !/usr/bin/gh auth git-credential
 
+[includeIf "gitdir:/home/prajwal/ttn/lakeshore/"]
+  path = /home/prajwal/ttn/lakeshore/.gitconfig
+
 [alias]
     history = "!f() { \
         if [ \"$#\" -eq 0 ]; then \
@@ -31,7 +34,7 @@
             return 1; \
         fi; \
         for file in \"$@\"; do \
-            git log --reverse --follow --format=%H \"$file\" | while read -r commit; do \
+            git log --follow --format=%H \"$file\" | while read -r commit; do \
                 git show --color=always \"$commit\" -- \"$file\"; \
             done; \
         done | less -R; \
