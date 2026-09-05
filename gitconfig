@@ -23,9 +23,6 @@
 [credential "https://gist.github.com"]
 	helper = !/usr/bin/gh auth git-credential
 
-[includeIf "gitdir:/home/prajwal/ttn/lakeshore/"]
-  path = /home/prajwal/ttn/lakeshore/.gitconfig
-
 [alias]
     history = "!f() { \
         if [ \"$#\" -eq 0 ]; then \
@@ -99,3 +96,5 @@
       fi; \
       git stash apply \"$stash\" && echo \"Applied QuickSave: $stash\"; \
     }; f"
+[core]
+	pager = bat --style=numbers --color=always

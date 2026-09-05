@@ -167,12 +167,12 @@ function pingx(){
     fi
 }
 
-if [ -f  /usr/bin/nvim ]; then
+if [ -f /usr/bin/nvim ] || [ -f /opt/homebrew/bin/nvim ]; then
   alias vi='nvim'
 fi
 
-if [ -f  /home/prajwal/.local/bin/lvim ]; then
-  alias vi='/home/prajwal/.local/bin/lvim'
+if [ -f  /home/prajwal/.local/bin/lvim ] || [ -f /Users/prajwal/.local/bin/lvim ]; then
+  alias vi='lvim'
 fi
 
 if [ -f /usr/bin/fzf ] && [ -f $HOME/usr/f ]; then
@@ -281,17 +281,11 @@ function got() {
         git worktree list
     fi
 }
-# Autocomplete branch names
-_got_branch_names() {
-  local branches="$(git worktree list | awk 'NR > 1 {gsub(/[][]/, "", $3); print $3}')"
-  COMPREPLY=($(compgen -W "$branches" -- "${COMP_WORDS[COMP_CWORD]}"))
-}
-complete -F _got_branch_names got
 
 ################# ZSHRC ###############
 
 # Check if the current shell is zsh
-if [[ $(ps -p $$ | awk '{print $4}' | tail -n 1) == "zsh" ]]; then
+if [[ $(ps -p $$ | awk '{print $4}' | tail -n 1) == "-zsh" ]]; then
   # Plugins currently using
   #plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker)
 
@@ -429,4 +423,4 @@ function ya() {
 }
 
 
-eval "$(gh copilot alias -- zsh)"
+#eval "$(gh copilot alias -- zsh)"
