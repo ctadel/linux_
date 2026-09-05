@@ -35,13 +35,14 @@ Switch profiles from Karabiner-Elements or its menu bar icon.
 
 Fn+Tab and Fn+Shift+Tab become Control+Tab and Control+Shift+Tab for cycling
 tabs. Physical Command+Tab and Command+Shift+Tab use macOS's app switcher,
-including reverse cycling. Command+` remains the native same-app window
-switcher. Option+Left/Right uses macOS workspace navigation, and
-Option+Shift+Left/Right sends the corresponding shifted workspace shortcut for
-moving the current window when that macOS shortcut is enabled.
+including reverse cycling. Physical Option+Tab and Option+Shift+Tab cycle
+windows in the current application using Command+` and Command+Shift+`.
+Option+Left/Right uses macOS workspace navigation.
 
 Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
-word. Ctrl+Backspace/Delete use Option+Delete for word deletion.
+word. Ctrl+Backspace/Delete use Option+Delete for word deletion. macOS does not
+expose a built-in keyboard shortcut for moving the current window to another
+Space, so Option+Shift+Arrow cannot provide that action through Karabiner alone.
 
 In GUI applications, Ctrl+D opens bookmarks, Ctrl+P opens print, Ctrl+J opens downloads, and Ctrl+Shift+M opens Chrome's profile menu.
 
