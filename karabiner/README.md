@@ -39,7 +39,9 @@ Control+Tab remains mapped to Command+` for current-application window cycling.
 Option+Left/Right uses macOS workspace navigation.
 
 Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
-word. Ctrl+Backspace/Delete use Option+Delete for word deletion. macOS does not
+word. Fn+Delete uses Option+Delete to remove the previous word. Control+Delete
+uses Option+Forward Delete to remove the next word.
+macOS does not
 expose a built-in keyboard shortcut for moving the current window to another
 Space, so Option+Shift+Arrow cannot provide that action through Karabiner alone.
 
