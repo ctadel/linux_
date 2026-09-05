@@ -1,0 +1,114 @@
+{
+  "profiles": [
+    {
+      "devices": [
+        {
+          "identifiers": {
+            "is_consumer": true,
+            "product_id": 40982,
+            "vendor_id": 6127
+          },
+          "ignore": true
+        },
+        {
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "apple_vendor_top_case_key_code": "keyboard_fn"
+              },
+              "to": [
+                {
+                  "key_code": "left_command"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_control"
+              },
+              "to": [
+                {
+                  "apple_vendor_top_case_key_code": "keyboard_fn"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_option"
+              },
+              "to": [
+                {
+                  "key_code": "left_control"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_command"
+              },
+              "to": [
+                {
+                  "key_code": "left_option"
+                }
+              ]
+              }
+          ]
+        }
+      ],
+      "name": "Prajwal Command Layout",
+      "selected": true,
+      "virtual_hid_keyboard": {
+        "keyboard_type_v2": "ansi"
+      }
+    },
+    {
+      "devices": [
+        {
+          "identifiers": {
+            "is_consumer": true,
+            "product_id": 40982,
+            "vendor_id": 6127
+          },
+          "ignore": true
+        },
+        {
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "apple_vendor_top_case_key_code": "keyboard_fn"
+              },
+              "to": [
+                {
+                  "key_code": "left_control"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_control"
+              },
+              "to": [
+                {
+                  "apple_vendor_top_case_key_code": "keyboard_fn"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "name": "Prajwal Legacy",
+      "virtual_hid_keyboard": {
+        "keyboard_type_v2": "ansi"
+      }
+    },
+    {
+      "name": "Guest"
+    }
+  ]
+}
