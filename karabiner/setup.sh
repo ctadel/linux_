@@ -13,19 +13,21 @@ ln -sfn "$repo_dir/prajwal_shortcuts.json" "$target"
 if command -v jq >/dev/null 2>&1 && [ -f "$config" ]; then
 	jq --slurpfile source "$repo_dir/prajwal_shortcuts.json" '
 		.profiles |= map(
-						if .name == "Prajwal Command Layout" then
+						if .name == "Prajwal" then
 				.complex_modifications.rules = $source[0].rules
+			elif .name == "Prajwal Command Layout" or .name == "Prajwal Legacy" then
+				empty
 			elif .name == "Guest" then
 				{name: "Guest"}
 			else
 				.
 			end
 		)
-				| if any(.profiles[]; .name == "Prajwal Command Layout") then . else .profiles += [{name: "Prajwal Command Layout"}] end
+				| if any(.profiles[]; .name == "Prajwal") then . else .profiles += [{name: "Prajwal"}] end
 		| if any(.profiles[]; .name == "Guest") then . else .profiles += [{name: "Guest"}] end
 	' "$config" > "$tmp_live_config"
 	mv "$tmp_live_config" "$live_config"
-	printf '%s\n' "Built live config with Prajwal Command Layout rules and reset Guest to standard macOS behavior."
+	printf '%s\n' "Built live config with Prajwal rules and reset Guest to standard macOS behavior."
 else
 	printf '%s\n' "Skipped profile synchronization: jq or $config is unavailable."
 fi

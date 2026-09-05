@@ -2,7 +2,7 @@
 
 `karabiner.json` is the tracked source for the Karabiner profile configuration, and `prajwal_shortcuts.json` is the tracked source for the Linux-style complex modifications.
 
-The `Prajwal Command Layout` profile's simple modifications use this physical
+The `Prajwal` profile's simple modifications use this physical
 layout:
 
 - Fn -> Command
@@ -25,8 +25,7 @@ From the repository root:
 
 The script links the shortcut source into Karabiner's assets directory, builds the live main config from both tracked JSON files, and resets `Guest` to an empty profile.
 
-- `Prajwal Command Layout`: the new modifier remaps and tracked Linux-style rules.
-- `Prajwal Legacy`: the previous Fn-as-Control modifier layout.
+- `Prajwal`: the modifier remaps and tracked Linux-style rules.
 - `Guest`: standard macOS behavior.
 
 Switch profiles from Karabiner-Elements or its menu bar icon.
@@ -42,6 +41,9 @@ Logical Control+PageUp/PageDown switches macOS Spaces using Control+Left/Right.
 Window arrangement shortcuts are managed separately in Rectangle. Disable
 macOS's Mission Control shortcuts for Control+Left/Right in System Settings so
 Rectangle can own those logical Control+Arrow shortcuts.
+
+Logical Control+F toggles fullscreen, Control+M minimizes the focused window,
+and Control+E opens Finder outside terminal apps.
 
 Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
 word. Fn+Delete uses Option+Delete to remove the previous word. Control+Delete
