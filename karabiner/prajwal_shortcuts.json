@@ -4,12 +4,17 @@
     {
       "description": "Ctrl editing: word navigation and word deletion",
       "manipulators": [
-        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_control", "left_shift"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_option", "left_shift"] }] },
-        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_control", "left_shift"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_option", "left_shift"] }] },
-        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_option"] }] },
-        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_option"] }] },
         { "type": "basic", "from": { "key_code": "delete_or_backspace", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "delete_or_backspace", "modifiers": ["left_option"] }] },
         { "type": "basic", "from": { "key_code": "forward_delete", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "forward_delete", "modifiers": ["left_option"] }] }
+      ]
+    },
+    {
+      "description": "Fn arrows: move by word and select by word",
+      "manipulators": [
+        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_command", "left_shift"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_option", "left_shift"] }] },
+        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_command", "left_shift"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_option", "left_shift"] }] },
+        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_option"] }] },
+        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_option"] }] }
       ]
     },
     {
@@ -87,27 +92,39 @@
         { "type": "basic", "from": { "key_code": "r", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "r", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
         { "type": "basic", "from": { "key_code": "u", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "u", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
         { "type": "basic", "from": { "key_code": "w", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "w", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "b", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "b", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "f", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "f", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "n", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "n", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "p", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "p", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "t", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "t", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "y", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "y", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "g", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "g", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "i", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "i", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "j", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "j", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "m", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "m", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "o", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "o", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "q", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "q", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "s", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "s", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
+        { "type": "basic", "from": { "key_code": "x", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "x", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
         { "type": "basic", "from": { "key_code": "c", "modifiers": { "mandatory": ["left_control", "left_shift"], "optional": [] } }, "to": [{ "key_code": "c", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
         { "type": "basic", "from": { "key_code": "v", "modifiers": { "mandatory": ["left_control", "left_shift"], "optional": [] } }, "to": [{ "key_code": "v", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] },
         { "type": "basic", "from": { "key_code": "v", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "v", "modifiers": ["left_control"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^net\\.kovidgoyal\\.kitty$", "^org\\.alacritty$"] }] }
       ]
     },
     {
-      "description": "Tab switching: Command tabs and external app windows",
+      "description": "Tab switching: Fn tabs and Command applications",
       "manipulators": [
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option", "left_shift"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_control", "left_shift"] }], "conditions": [{ "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }] }] },
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_control"] }], "conditions": [{ "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }] }] },
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_control", "left_shift"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_command", "left_shift"] }], "conditions": [{ "type": "device_unless", "identifiers": [{ "is_built_in_keyboard": true }] }] },
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_control"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_command"] }], "conditions": [{ "type": "device_unless", "identifiers": [{ "is_built_in_keyboard": true }] }] },
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option", "left_shift"], "optional": [] } }, "to": [{ "key_code": "grave_accent_and_tilde", "modifiers": ["left_command", "left_shift"] }], "conditions": [{ "type": "device_unless", "identifiers": [{ "is_built_in_keyboard": true }] }] },
-        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option"], "optional": [] } }, "to": [{ "key_code": "grave_accent_and_tilde", "modifiers": ["left_command"] }], "conditions": [{ "type": "device_unless", "identifiers": [{ "is_built_in_keyboard": true }] }] }
+        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_command", "left_shift"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_control", "left_shift"] }] },
+        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_control"] }] },
+        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option", "left_shift"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_command", "left_shift"] }] },
+        { "type": "basic", "from": { "key_code": "tab", "modifiers": { "mandatory": ["left_option"], "optional": [] } }, "to": [{ "key_code": "tab", "modifiers": ["left_command"] }] }
       ]
     },
     {
-      "description": "Super arrows change workspace",
+      "description": "Option arrows change workspace",
       "manipulators": [
-        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_control"] }] },
-        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_command"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_control"] }] }
+        { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["left_option", "left_shift"], "optional": [] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_control", "left_shift"] }] },
+        { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["left_option", "left_shift"], "optional": [] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_control", "left_shift"] }] }
       ]
     }
   ]

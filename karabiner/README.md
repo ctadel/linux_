@@ -33,14 +33,15 @@ Switch profiles from Karabiner-Elements or its menu bar icon.
 
 ## App switching and arrows
 
-Fn+Tab and Fn+Shift+Tab use macOS's native app switcher, including reverse
-cycling. Physical Command+Tab and Command+Shift+Tab become Control+Tab and
-Control+Shift+Tab for cycling tabs. Command+` remains the native same-app
-window switcher. External Alt+Tab continues to use the app switcher, while
-external Windows+Tab and Windows+Shift+Tab continue to cycle same-application
-windows.
+Fn+Tab and Fn+Shift+Tab become Control+Tab and Control+Shift+Tab for cycling
+tabs. Physical Command+Tab and Command+Shift+Tab use macOS's app switcher,
+including reverse cycling. Command+` remains the native same-app window
+switcher. Option+Left/Right uses macOS workspace navigation, and
+Option+Shift+Left/Right sends the corresponding shifted workspace shortcut for
+moving the current window when that macOS shortcut is enabled.
 
-Ctrl+Left/Right use Option+Arrow for word navigation. Ctrl+Backspace/Delete use Option+Delete for word deletion. Super+Left/Right uses Control+Arrow for workspace navigation.
+Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
+word. Ctrl+Backspace/Delete use Option+Delete for word deletion.
 
 In GUI applications, Ctrl+D opens bookmarks, Ctrl+P opens print, Ctrl+J opens downloads, and Ctrl+Shift+M opens Chrome's profile menu.
 
@@ -52,8 +53,8 @@ the address bar, Ctrl+Shift+B to the bookmarks bar, Ctrl+Shift+J/I to developer
 tools, Ctrl+Shift+Backspace to clear browsing data, and Ctrl+Plus/Minus/0 to
 zoom controls.
 
-In terminals, Fn+C/Z/D/H and common readline keys are translated back to
-Control signals and editing commands. Fn+V pastes, and Fn+Shift+C/V provide
-terminal copy and paste.
+In terminals, Fn plus the alphabet keys is translated to the corresponding
+Control character, including C/Z/D and the common readline signals and editing
+commands. Fn+V pastes, and Fn+Shift+C/V provide terminal copy and paste.
 
 Moving the pointer dismissing the native macOS app switcher is controlled by macOS itself and cannot be changed by a Karabiner complex modification. The same-application Super+Tab path does not use that app switcher.
