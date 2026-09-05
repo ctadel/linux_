@@ -13,7 +13,9 @@ layout:
 That makes the physical Fn key the macOS Command key, so Fn+C/V/N and
 Fn+click use native macOS behavior. The physical Option key becomes the
 Linux-style Control key, while the physical Command key becomes Option.
-Complex rules translate special shortcuts and terminal Command keys as needed.
+External keyboards use the matching layout: Control becomes Command, Windows
+becomes Option, and Alt becomes Control. Complex rules translate special
+shortcuts and terminal Command keys as needed.
 
 ## Install
 
@@ -43,6 +45,8 @@ Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
 word. Ctrl+Backspace/Delete use Option+Delete for word deletion. macOS does not
 expose a built-in keyboard shortcut for moving the current window to another
 Space, so Option+Shift+Arrow cannot provide that action through Karabiner alone.
+Fn+Backspace/Delete also uses Option+Delete, deleting one word rather than the
+entire line.
 
 In GUI applications, Ctrl+D opens bookmarks, Ctrl+P opens print, Ctrl+J opens downloads, and Ctrl+Shift+M opens Chrome's profile menu.
 
@@ -56,6 +60,7 @@ zoom controls.
 
 In terminals, Fn plus the alphabet keys is translated to the corresponding
 Control character, including C/Z/D and the common readline signals and editing
-commands. Fn+V pastes, and Fn+Shift+C/V provide terminal copy and paste.
+commands. Fn+V sends an actual Control+V character; Fn+Shift+V pastes, and
+Fn+Shift+C copies.
 
 Moving the pointer dismissing the native macOS app switcher is controlled by macOS itself and cannot be changed by a Karabiner complex modification. The same-application Super+Tab path does not use that app switcher.

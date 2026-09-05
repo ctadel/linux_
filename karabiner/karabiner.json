@@ -12,7 +12,7 @@
         },
         {
           "identifiers": {
-            "is_keyboard": true
+            "is_built_in_keyboard": true
           },
           "simple_modifications": [
             {
@@ -55,6 +55,74 @@
                 }
               ]
               }
+          ]
+        },
+        {
+          "identifiers": {
+            "is_keyboard": true,
+            "is_built_in_keyboard": false
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "left_control"
+              },
+              "to": [
+                {
+                  "key_code": "left_command"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_control"
+              },
+              "to": [
+                {
+                  "key_code": "left_command"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_gui"
+              },
+              "to": [
+                {
+                  "key_code": "left_option"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_gui"
+              },
+              "to": [
+                {
+                  "key_code": "left_option"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "left_option"
+              },
+              "to": [
+                {
+                  "key_code": "left_control"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_option"
+              },
+              "to": [
+                {
+                  "key_code": "left_control"
+                }
+              ]
+            }
           ]
         }
       ],
