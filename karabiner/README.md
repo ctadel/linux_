@@ -38,6 +38,11 @@ tabs. Physical Command+Tab and Command+Shift+Tab are left for the AltTab app.
 Control+Tab remains mapped to Command+` for current-application window cycling.
 Option+Left/Right uses macOS workspace navigation.
 
+Logical Control+PageUp/PageDown switches macOS Spaces using Control+Left/Right.
+Window arrangement shortcuts are managed separately in Rectangle. Disable
+macOS's Mission Control shortcuts for Control+Left/Right in System Settings so
+Rectangle can own those logical Control+Arrow shortcuts.
+
 Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
 word. Fn+Delete uses Option+Delete to remove the previous word. Control+Delete
 uses Option+Forward Delete to remove the next word.
