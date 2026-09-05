@@ -6,17 +6,14 @@ The `Prajwal Command Layout` profile's simple modifications use this physical
 layout:
 
 - Fn -> Command
-- Control -> Control (native)
+- Control -> Fn
 - Option -> Control
 - Command -> Option
 
 That makes the physical Fn key the macOS Command key, so Fn+C/V/N and
-Fn+click use native macOS behavior. The physical Control key remains native,
-the physical Option key becomes the Linux-style Control key, and the physical
-Command key becomes Option.
-External keyboards use the matching layout: Control becomes Command, Windows
-becomes Option, and Alt becomes Control. Complex rules translate special
-shortcuts and terminal Command keys as needed.
+Fn+click use native macOS behavior. The physical Option key becomes the
+Linux-style Control key, while the physical Command key becomes Option.
+Complex rules translate special shortcuts and terminal Command keys as needed.
 
 ## Install
 
@@ -37,17 +34,14 @@ Switch profiles from Karabiner-Elements or its menu bar icon.
 ## App switching and arrows
 
 Fn+Tab and Fn+Shift+Tab become Control+Tab and Control+Shift+Tab for cycling
-tabs. Physical Command+Tab and Command+Shift+Tab use macOS's app switcher,
-including reverse cycling. Physical Option+Tab and Option+Shift+Tab cycle
-windows in the current application using Command+` and Command+Shift+`.
+tabs. Physical Command+Tab and Command+Shift+Tab are left for the AltTab app.
+Control+Tab remains mapped to Command+` for current-application window cycling.
 Option+Left/Right uses macOS workspace navigation.
 
 Fn+Left/Right uses Option+Arrow for word navigation, with Shift selecting by
 word. Ctrl+Backspace/Delete use Option+Delete for word deletion. macOS does not
 expose a built-in keyboard shortcut for moving the current window to another
 Space, so Option+Shift+Arrow cannot provide that action through Karabiner alone.
-Fn+Backspace/Delete also uses Option+Delete, deleting one word rather than the
-entire line.
 
 In GUI applications, Ctrl+D opens bookmarks, Ctrl+P opens print, Ctrl+J opens downloads, and Ctrl+Shift+M opens Chrome's profile menu.
 
@@ -61,7 +55,6 @@ zoom controls.
 
 In terminals, Fn plus the alphabet keys is translated to the corresponding
 Control character, including C/Z/D and the common readline signals and editing
-commands. Fn+V sends an actual Control+V character; Fn+Shift+V pastes, and
-Fn+Shift+C copies.
+commands. Fn+V pastes, and Fn+Shift+C/V provide terminal copy and paste.
 
 Moving the pointer dismissing the native macOS app switcher is controlled by macOS itself and cannot be changed by a Karabiner complex modification. The same-application Super+Tab path does not use that app switcher.
