@@ -6,13 +6,14 @@ The `Prajwal Command Layout` profile's simple modifications use this physical
 layout:
 
 - Fn -> Command
-- Control -> Fn
+- Control -> Control (native)
 - Option -> Control
 - Command -> Option
 
 That makes the physical Fn key the macOS Command key, so Fn+C/V/N and
-Fn+click use native macOS behavior. The physical Option key becomes the
-Linux-style Control key, while the physical Command key becomes Option.
+Fn+click use native macOS behavior. The physical Control key remains native,
+the physical Option key becomes the Linux-style Control key, and the physical
+Command key becomes Option.
 External keyboards use the matching layout: Control becomes Command, Windows
 becomes Option, and Alt becomes Control. Complex rules translate special
 shortcuts and terminal Command keys as needed.
